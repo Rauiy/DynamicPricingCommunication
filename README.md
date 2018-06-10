@@ -2,8 +2,25 @@
 
 ##### Table of Contents   
 * [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
-
- * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
+  * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
+  * [Restrictions](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#restrictions)
+  * [Rate](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate)
+    * [Rate Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate-examples)
+  * [Schedules](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedules)
+    * [Active Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#activeschedule-object)
+    * [Active Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-examples)
+    * [Valid Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#validschedule-object)
+    * [Valid Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#valid-schedule-examples)
+* [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location)
+  * [Address](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#address-object)
+  * [Contact](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#contact-object)
+  * [GeoLocation](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#geospatial-location)
+  * [Polygon](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#polygon)
+  * [Auxiliary](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#auxiliary)
+  * [Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule) 
+  * [Surcharges](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#surcharges)
+* [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy)
+  * [Parking space](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#parking-space)
 
 # Protocol format
 The protocol’s format is defined for JSON format.
@@ -46,13 +63,13 @@ The elements that provides additional information for a tariff are: _tariffType_
 |targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
-##### TariffType Tokens
+#### TariffType Tokens
 |Token Name|Description|
 |----------|-----------|
 |REGULAR|The tariff has stoppable rates|
 |FIXED|The tariff only has fixed rates|
 
-##### ParkingType Tokens
+#### ParkingType Tokens
 |Token Name|Description|
 |----------|-----------|
 |PRIVATE|Private tariff|
@@ -62,7 +79,7 @@ The elements that provides additional information for a tariff are: _tariffType_
 |PUBLIC|The tariff is open to the public|
 
 TODO: Determine all necessery vehicle types
-##### VehicleType Tokens
+#### VehicleType Tokens
 |Token Name|Description|
 |----------|-----------|
 |CAR|Personal car|
@@ -88,7 +105,7 @@ The rate is the smallest component of a parking fee, which describes the price d
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
 |countOnlyPaidTime|Boolean|Set true if the interval only should only count for paid hours|Default: false|
 
-##### UnitType Tokens
+#### UnitType Tokens
 |Token Name|Description|
 |----------|-----------|
 |MIN|The rate interval is given in minutes|
@@ -101,7 +118,7 @@ The rate is the smallest component of a parking fee, which describes the price d
 The simplest tariff with a constant cost per time units can be expressed using one rate component. However, a tariff can be more advanced than a constant cost per time unit, which requires more than 1 rate component to express the tariff.
 For example: see **Rate example 1**, which describes a pricing strategy: the first-hour costs 10 SEK, the second hour is free, and thereafter the cost is 20 SEK per hour. Because no unit was provided in the rates, the interval is assumed to be in minutes. 
 
-##### Rate example 1
+#### Rate example 1
 ```
 {
  "rates":[
@@ -113,7 +130,7 @@ For example: see **Rate example 1**, which describes a pricing strategy: the fir
 
 Apart from consisting of several rate components, a complex tariff might also include both regular and fixed rates. In such case, the fixed rates must be expressed differently than the regular rates. For example: see **Rate example 2**, which describes the pricing strategy: the first hour (1 + 59 minutes) has a fixed rate of 15 SEK, and thereafter the cost is 10 SEK per hour. 
 
-##### Rate example 2
+#### Rate example 2
 ```
 {
  "rates":[
@@ -134,7 +151,7 @@ Apart from complex tariffs, a tariff might also have maximum fees such as daily,
 |1 Month | 40 320 <br /> to 44 640|28 <br /> to 31| ~4|1|-|
 |1 Year | 525 600 <br /> to 527 040| 365 <br /> to 366|~52|12|1|
 
-##### Rate example 3
+#### Rate example 3
 ```
 {
  "rates":[
@@ -160,7 +177,7 @@ The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) hav
 #### Active Schedule Examples
 An activeSchedule might need more than one schedule unit to express the intention because the active time might vary per day. Therefore, each schedule requires a locally unique ID. For example, Active Schedule example shows a tariff is active during from 07:00 to 17:00 (16:59:59) weekdays and from 07:00 to 14:00 (13:59:59) Saturdays, and thus it requires at least two schedule units to describe. Note that there is no time defined for Sundays, hence, there is no parking fee during Sundays.
 
-##### Active Schedule example
+#### Active Schedule example
 ```
 {"activeSchedules":[
   {"activeScheduleId":"as-0",
@@ -188,7 +205,7 @@ An activeSchedule might need more than one schedule unit to express the intentio
 
 Like activeSchedules, multiple validSchedules might be necessary, and therefore locally unique IDs is required. For example: see Figure 16, which says that a tariff can be started between 1 January 2018 to 30 June 2018, Mondays to Fridays, from 00:00 to 09:00 (08:59:59), and from 21:00 to 00:00 (23:59:59). 
 
-##### Valid Schedule example
+#### Valid Schedule example
 ```
 {"validSchedules":[
   {"validScheduleId":"vs-0",
@@ -208,7 +225,7 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 ]}
 ```
 
-##### Day Tokens
+#### Day Tokens
 |Token Name|Description|
 |----------|-----------|
 |MONDAY||
@@ -272,7 +289,7 @@ Locations may include geospatial coordinates, making it easier to find the locat
 |geoType|GeoType|Token describing what the geo-point defines||
 |locationName|String|Nickname for the geo-point||
 
-##### GeoType Tokens
+#### GeoType Tokens
 |Token Name|Description|
 |----------|-----------|
 |ENTRY|The point is a car entry|
@@ -307,7 +324,7 @@ Contains additional information regarding the parking area, such as currency, ti
 |operatingHours|Schedule|Operating hours of the parking area||
 |surcharges|Surcharges|Additional charge information||
 
-##### LocationType Tokens
+#### LocationType Tokens
 |Token Name|Description|
 |----------|-----------|
 |ABOVE_GROUND_GARAGE||
@@ -329,7 +346,7 @@ Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommu
 |days|Days|Days the parking area is open||
 |date|Date|Specific date the parking area is open||
 
-##### Day Tokens (2)
+#### Day Tokens (2)
 Schedule has the same day [tokens](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#day-tokens) as defined under tariff
 
 ### Surcharges
@@ -363,7 +380,7 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
 |log|Log|When this object was created and when the static info was updated last|Required|
 
-##### DetectionType tokens
+#### DetectionType tokens
 |Token Name|Description|
 |----------|-----------|
 |MANUALLY|The occupancy data is measured manually by workers|
