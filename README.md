@@ -320,8 +320,8 @@ Contains additional information regarding the parking area, such as currency, ti
 #### Auxiliary Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|currency|Currency|ISO-4217 currency codes||
-|timeZone|String|ISO 8601 Extended Notation (+|-hh:mm)||
+|currency|String|ISO-4217 currency codes||
+|timeZone|String|ISO 8601 Extended Notation (+\|-hh:mm)||
 |public|Boolean|If the parking area is open to the public||
 |paid|Boolean|If the parking area requires payment||
 |locationType|LocationType|What type of parking area it is||
