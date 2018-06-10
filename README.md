@@ -1,6 +1,10 @@
 # Dynamic Pricing Communication
+## Version 0.1
+|Date|Author|Version|Change log|
+|:---:|:---:|:---:|:---:|
+|2018-06-10|Steven Ly|0.1|Added format description as readme|
 
-##### Table of Contents   
+## Table of Contents   
 * [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
   * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
   * [Restrictions](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#restrictions)
@@ -25,7 +29,7 @@
 # Protocol format
 The protocol’s format is defined for JSON format.
 
-The parking data included in the protocol’s format, are referred to as elements. The elements are further divided into three categories: location, occupancy, and tariff. The three categories act as root objects and hold the other elements together. The root elements are separated into three different arrays under a parent object. Arrays are used for the root element as there might be multiple occurrences of each type. Any object that has multiple occurrences, such as the root objects, include a unique identification string. The three categories and what they include is explained in the following subsections.
+The parking data included in the protocol’s format, are referred to as elements. The elements are further divided into three categories: location, occupancy, and tariff. The three categories act as root objects and hold the other elements together. The root elements are separated into three different arrays under a parent object. Arrays are used for the root element as there might be multiple occurrences of each type. Any object that has multiple occurrences, such as the root objects, include a unique identification string.
 
 ## Tariff
 Tariff data is the object that describes the parking fees of a parking location. Tariff data is included in the protocol to enable fast and easy sharing of new tariffs. There exists a wide variety of how a tariff can be expressed. The proposed protocol aims to express both the simplest and the most complex tariff while maintaining a generic method of expressing tariffs. 
@@ -88,10 +92,10 @@ TODO: Determine all necessery vehicle types
 |TRUCK||
 |ELECTRIC|Any kind of electric vehicle|
 |BUS||
-|...||
+|...|Not in list|
 
 ### Rate
-The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates.
+The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates. Furthermore, the rate object should be used to define periodical maximum fees, such as daily, weekly, monthly, or 8hrs maximum fees.
 
 #### Rate Object
 |Element Name|Type|Description|Constraints|
