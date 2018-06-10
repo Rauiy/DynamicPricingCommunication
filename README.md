@@ -219,5 +219,85 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 
 
 ## Location
+The purpose of location data is to map parking-related information to a location. 
+Mandatory for the location data is to include a globally unique identifier for each location.
+
+#### Location Object
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|locationId|String(ID)|||
+|parentLocation|String(ID)|||
+|sublocations|String(ID)|||
+|name|String|||
+|areaNumber|String(ID)|||
+|address| Address|||
+|contact| Contact|||
+|geoLocation|GeoLocation|||
+|polygons|Polygon|||
+|auxiliary|Auxiliary|||
+|log|Log|||
+ 
+#### Address 
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|street|String|||
+|postalCode|String|||
+|city|String|||
+|region|String|||
+|country|String|||
+
+
+#### Contact
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|contactName|String|||
+|organization|String|||
+|email|String|||
+|phoneNumber|String|||
+
+
+#### GeoLocation 
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|latitude|String|||
+|longitude|String|||
+|geoType|GeoType|||
+|locationName|String|||
+
+#### Polygon
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|type|String|||
+|ref|String|||
+|encoded|String|||
+|description|String|||
+
+#### Auxiliary 
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|currency|Currency|||
+|timeZone|String|||
+|public|Boolean|||
+|paid|Boolean|||
+|locationType|LocationType|||
+|operatingHours|Schedule|||
+|surcharges|Surcharges|||
+
+#### Schedule 
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|scheduleId|ID|||
+|startTime|Int|||
+|endTime|Int|||
+|days|Days|||
+|date|Date|||
+
+#### Surcharges
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|taxIncluded|Boolean|||
+|tax|Float|||
+|other|Float|||
 
 ## Occupancy
+Occupancy data are the information that describes the occupancy status of a parking location. Occupancy includes information about how many parking spaces there are in total (supply) and how many that are occupied (both as a percentage and a total number). Both supply and occupied are part of the core information of occupancy data. Therefore, supply and occupied are mandatory elements for the occupancy data. For additional features, the occupancy data also includes the elements: average occupancy, the probability of finding a parking space, and individual parking space information. The purpose of the average occupancy information is to give a major idea of how well a pricing strategy has performed and the occupancy status. Like average occupancy, the purpose of probability element is to give a major idea of the current occupancy status. The purpose of individual parking space data is to give an accurate occupancy status.
