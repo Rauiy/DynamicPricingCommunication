@@ -68,6 +68,7 @@ The elements that provides additional information for a tariff are: _tariffType_
 |targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### TariffType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -98,7 +99,7 @@ TODO: Determine all necessery vehicle types
 ### Rate
 The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates. Furthermore, the rate object should be used to define periodical maximum fees, such as daily, weekly, monthly, or 8hrs maximum fees.
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+
 #### Rate Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -111,6 +112,7 @@ Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/maste
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
 |countOnlyPaidTime|Boolean|Set true if the interval only should only count for paid hours|Default: false|
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### UnitType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -166,13 +168,13 @@ Apart from complex tariffs, a tariff might also have maximum fees such as daily,
   {"order":3,"value":200,"interval":10080,"intervals":1,"max":true}
 ]}
 ```
-
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 ### Schedules
 There are two types of schedule objects: active- and validSchedule. The activeSchedule is used to define when a tariff is active, and restricts a tariff based on the elapsed- and current time. An activeSchedule can be interpreted as rules to when a tariff is applicable. This is necessary to be able to define time periods when the parking is free. The activeSchedule are also used to differentiate which tariff to use when a single location has multiple tariffs. For example, parking after a specific time might have a cheaper tariff or be free. The validSchedule, on the other hand, restrict when a tariff is valid and usable based on when the parking started. The validSchedule is necessary when defining early bird tariffs, where a driver get cheaper rates if the driver starts parking inside a specific time period.
 
 The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) have a time accuracy in minutes, and are given in minutes past midnight. To prevent time values from clashing, some standard definitions exists. The _startTime_ and _validTimeFrom_ are defined as the exact second the minutes defines, for example, 60 (01:00) defines the start time 01:00:00. In contrast, _endTime_ and _validTimeTo_ are defined as 1 second before what the minutes defines, for example, 1380 (23:00) defines the end time 22:59:59.
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+
 #### ActiveSchedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -181,6 +183,7 @@ Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/maste
 |endTime|Int|End time of the paid hours|Required<br/>Min value: 0 <br />Max value: 1440|
 |days|Array(Days)|The days the tariff are active, i.e. days with parking fees |Required<br/>Only unique days|
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### Active Schedule Examples
 An activeSchedule might need more than one schedule unit to express the intention because the active time might vary per day. Therefore, each schedule requires a locally unique ID. For example, Active Schedule example shows a tariff is active during from 07:00 to 17:00 (16:59:59) weekdays and from 07:00 to 14:00 (13:59:59) Saturdays, and thus it requires at least two schedule units to describe. Note that there is no time defined for Sundays, hence, there is no parking fee during Sundays.
 
@@ -208,6 +211,7 @@ An activeSchedule might need more than one schedule unit to express the intentio
 |validTimeTo|Int|The time when the tariff cannot be started anymore|Required<br/>Min value: 0 <br />Max value: 1440|
 |validDays|Arrays(Day)|The days the tariff can be started|Required<br/>Only unique days|
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### Valid Schedule Examples
 
 Like activeSchedules, multiple validSchedules might be necessary, and therefore locally unique IDs is required. For example: see Figure 16, which says that a tariff can be started between 1 January 2018 to 30 June 2018, Mondays to Fridays, from 00:00 to 09:00 (08:59:59), and from 21:00 to 00:00 (23:59:59). 
@@ -255,7 +259,7 @@ These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricin
 |created| DateTime|When the object was created|Required|
 |creator| String|Name/Username of the creator of the object|Required|
 
-These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object) and [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object)
+These tokens are used for [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object), [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object) and [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object)
 
 ## Location
 The purpose of location data is to map parking-related information to a location. 
@@ -278,8 +282,6 @@ TODO: determine all the required elements for every object under Location
 |auxiliary|[Auxiliary](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#auxiliary-object)|Additional information of the area||
 |log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|Information regarding who created and upated the information the last|Required|
 
-Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
-
 #### Address Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -289,6 +291,8 @@ Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingComm
 |region|String|State or county name||
 |country|String|ISO-3166 Alpha-2 country codes|Required|
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+
 #### Contact Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -297,10 +301,11 @@ Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingComm
 |email|String|Email to contact the responsible organization|Required|
 |phoneNumber|String|Number to contact the responsible organization||
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+
 ### Geospatial Location
 Locations may include geospatial coordinates, making it easier to find the location
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### GeoLocation Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -308,6 +313,8 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 |longitude|String|||
 |geoType|GeoType|Token describing what the geo-point defines||
 |locationName|String|Nickname for the geo-point||
+
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 
 #### GeoType Tokens
 |Token Name|Description|
@@ -322,7 +329,6 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 ### Polygon
 More advanced geographical data such as polygon markups in a map might be sought after. A commonly used format which provides such functionalities is KML. However, KML is a format based on XML with their own definition for file structures and might be hard to include in the JSON representation. However, some might want other formats than KML. Therefore, the format includes an object for attaching a reference providing the location of the polygon files. The polygon object also supports the use of encoded polygon data as an encrypted string.
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Polygon Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -331,10 +337,11 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 |encoded|String|Encoded polygon data||
 |description|String|Additional information about the polygon||
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+
 ### Auxiliary
 Contains additional information regarding the parking area, such as currency, time zone, and operating hours.
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Auxiliary Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -346,6 +353,7 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 |operatingHours|Schedule|Operating hours of the parking area||
 |surcharges|Surcharges|Additional charge information||
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### LocationType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -359,7 +367,6 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 ### Schedule
 Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-object) object of the tariff.
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Schedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -375,13 +382,14 @@ Schedule has the same day [tokens](https://github.com/Rauiy/DynamicPricingCommun
 ### Surcharges
 Might need to add more elements to surcharges
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Surcharges Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
 |taxIncluded|Boolean|If taxes is included in the price||
 |tax|Float|The tax percentage||
 |other|Float|Additional fee amount||
+
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 
 ## Occupancy
 Occupancy data are the information that describes the occupancy status of a parking location. Occupancy includes information about how many parking spaces there are in total (supply) and how many that are occupied (both as a percentage and a total number). Occupancy data also includes the elements: average occupancy, the probability of finding a parking space, and individual parking space information. The purpose of the average occupancy information is to give a major idea of how well a pricing strategy has performed and the occupancy status. Like average occupancy, the purpose of probability element is to give a major idea of the current occupancy status. The purpose of individual parking space data is to give an accurate occupancy status.
@@ -402,9 +410,7 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |updateFrequency|Int|How often occupancy data is updated<br/> 30 -> once every 30 sec||
 |detectionMethod|DetectionType|How occupancy data is collected||
 |parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
-|log|Log|When this object was created and when the static info was updated last|Required|
-
-Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
+|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|When this object was created and when the static info was updated last|Required|
 
 #### DetectionType tokens
 |Token Name|Description|
@@ -428,6 +434,7 @@ Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingComm
 |spaceType| SpaceType|What kind of space it is||
 |updated| DateTime|When static info was updated last||
 
+Part of [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object).
 #### SpaceType
 |Token Name|Description|
 |----------|-----------|
