@@ -96,7 +96,6 @@ TODO: Determine all necessery vehicle types
 |TRUCK||
 |ELECTRIC|Any kind of electric vehicle|
 |BUS||
-|...|Not in list|
 
 ### Rate
 The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates. Furthermore, the rate object should be used to define periodical maximum fees, such as daily, weekly, monthly, or 8hrs maximum fees.
