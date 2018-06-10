@@ -8,26 +8,26 @@
 
 ## Table of Contents   
 * [Tariff](#tariff)
-  * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
-  * [Restrictions](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#restrictions)
-  * [Rate](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate)
-    * [Rate Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate-examples)
-  * [Schedules](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedules)
-    * [Active Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#activeschedule-object)
-    * [Active Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-examples)
-    * [Valid Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#validschedule-object)
-    * [Valid Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#valid-schedule-examples)
-  * [Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
-* [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location)
-  * [Address](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#address-object)
-  * [Contact](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#contact-object)
-  * [GeoLocation](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#geospatial-location)
-  * [Polygon](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#polygon)
-  * [Auxiliary](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#auxiliary)
-  * [Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule) 
-  * [Surcharges](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#surcharges)
-* [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy)
-  * [Parking space](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#parking-space)
+  * [Tariff Object](#tariff-object)
+  * [Restrictions](#restrictions)
+  * [Rate](#rate)
+    * [Rate Examples](#rate-examples)
+  * [Schedules](#schedules)
+    * [Active Schedule](#activeschedule-object)
+    * [Active Schedule Examples](#active-schedule-examples)
+    * [Valid Schedule](#validschedule-object)
+    * [Valid Schedule Examples](#valid-schedule-examples)
+  * [Log](#log-object)
+* [Location](#location)
+  * [Address](#address-object)
+  * [Contact](#contact-object)
+  * [GeoLocation](#geospatial-location)
+  * [Polygon](#polygon)
+  * [Auxiliary](#auxiliary)
+  * [Schedule](#schedule) 
+  * [Surcharges](#surcharges)
+* [Occupancy](#occupancy)
+  * [Parking space](#parking-space)
 
 # Protocol format
 The protocol’s format is defined for JSON format.
@@ -45,10 +45,10 @@ The tariff information is divided into three parts: restriction, rate, and sched
 |tariffId|String(ID)|Unique ID of the tariff|Required|
 |locationId|String(ID)|ID of the location the tariff is meant for|Required|
 |restriciton|Restrictions|Object containint restrictions for the tariff|Required|
-|rate|Array([Rate](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate-object))|Rate components|Required<br/>Min items: 1|
-|activeSchedule|Array([ActiveSchedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#activeschedule-object))|Schedules defining the paid hours|Required<br/>Min items: 1|
-|validSchedule|Array([ValidSchedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#validschedule-object))|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
-|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|Information regarding when the tariff object was created and latest updated|Required|
+|rate|Array([Rate](#rate-object))|Rate components|Required<br/>Min items: 1|
+|activeSchedule|Array([ActiveSchedule](#activeschedule-object))|Schedules defining the paid hours|Required<br/>Min items: 1|
+|validSchedule|Array([ValidSchedule](#validschedule-object))|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
+|log|[Log](#log-object)|Information regarding when the tariff object was created and latest updated|Required|
 
 ### Restrictions
 Restrictions object includes information that limits or provide additional information regarding a tariff. 
@@ -70,7 +70,7 @@ The elements that provides additional information for a tariff are: _tariffType_
 |targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+Part of [Tariff](#tariff-object).
 #### TariffType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -114,7 +114,7 @@ The rate is the smallest component of a parking fee, which describes the price d
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
 |countOnlyPaidTime|Boolean|Set true if the interval only should only count for paid hours|Default: false|
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+Part of [Tariff](#tariff-object).
 #### UnitType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -170,7 +170,7 @@ Apart from complex tariffs, a tariff might also have maximum fees such as daily,
   {"order":3,"value":200,"interval":10080,"intervals":1,"max":true}
 ]}
 ```
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+Part of [Tariff](#tariff-object).
 ### Schedules
 There are two types of schedule objects: active- and validSchedule. The activeSchedule is used to define when a tariff is active, and restricts a tariff based on the elapsed- and current time. An activeSchedule can be interpreted as rules to when a tariff is applicable. This is necessary to be able to define time periods when the parking is free. The activeSchedule are also used to differentiate which tariff to use when a single location has multiple tariffs. For example, parking after a specific time might have a cheaper tariff or be free. The validSchedule, on the other hand, restrict when a tariff is valid and usable based on when the parking started. The validSchedule is necessary when defining early bird tariffs, where a driver get cheaper rates if the driver starts parking inside a specific time period.
 
@@ -185,7 +185,7 @@ The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) hav
 |endTime|Int|End time of the paid hours|Required<br/>Min value: 0 <br />Max value: 1440|
 |days|Array(Days)|The days the tariff are active, i.e. days with parking fees |Required<br/>Only unique days|
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+Part of [Tariff](#tariff-object).
 #### Active Schedule Examples
 An activeSchedule might need more than one schedule unit to express the intention because the active time might vary per day. Therefore, each schedule requires a locally unique ID. For example, Active Schedule example shows a tariff is active during from 07:00 to 17:00 (16:59:59) weekdays and from 07:00 to 14:00 (13:59:59) Saturdays, and thus it requires at least two schedule units to describe. Note that there is no time defined for Sundays, hence, there is no parking fee during Sundays.
 
@@ -213,7 +213,7 @@ An activeSchedule might need more than one schedule unit to express the intentio
 |validTimeTo|Int|The time when the tariff cannot be started anymore|Required<br/>Min value: 0 <br />Max value: 1440|
 |validDays|Arrays(Day)|The days the tariff can be started|Required<br/>Only unique days|
 
-Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
+Part of [Tariff](#tariff-object).
 #### Valid Schedule Examples
 
 Like activeSchedules, multiple validSchedules might be necessary, and therefore locally unique IDs is required. For example: see Figure 16, which says that a tariff can be started between 1 January 2018 to 30 June 2018, Mondays to Fridays, from 00:00 to 09:00 (08:59:59), and from 21:00 to 00:00 (23:59:59). 
@@ -251,7 +251,7 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 |HOLIDAY|Also known as red days|
 |DAY_BEFORE_RED_DAY|Also know as day before holiday|
 
-These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule-object)
+These tokens are also used for [Location](#schedule-object)
 
 #### Log Object
 |Element Name|Type|Description|Constraints|
@@ -261,7 +261,7 @@ These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricin
 |created| DateTime|When the object was created|Required|
 |creator| String|Name/Username of the creator of the object|Required|
 
-These tokens are used for [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object), [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object) and [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object)
+These tokens are used for [Tariff](#tariff-object), [Location](#location-object) and [Occupancy](#occupancy-object)
 
 ## Location
 The purpose of location data is to map parking-related information to a location. 
@@ -278,11 +278,11 @@ TODO: determine all the required elements for every object under Location
 |name|String|Name or nickname of the area||
 |areaNumber|String(ID)|Internal area numbering||
 |address| Address|Object containing address info||
-|contact| [Contact](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#contact-object)|Object containing contanct info for the area||
-|geoLocation|[GeoLocation](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#geolocation-object)|Simple geospatial information regarding the area||
-|polygons|[Polygon](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#polygon-object)|Complex geospatial information regarding the area||
-|auxiliary|[Auxiliary](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#auxiliary-object)|Additional information of the area||
-|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|Information regarding who created and upated the information the last|Required|
+|contact| [Contact](#contact-object)|Object containing contanct info for the area||
+|geoLocation|[GeoLocation](#geolocation-object)|Simple geospatial information regarding the area||
+|polygons|[Polygon](#polygon-object)|Complex geospatial information regarding the area||
+|auxiliary|[Auxiliary](#auxiliary-object)|Additional information of the area||
+|log|[Log](#log-object)|Information regarding who created and upated the information the last|Required|
 
 #### Address Object
 |Element Name|Type|Description|Constraints|
@@ -293,7 +293,7 @@ TODO: determine all the required elements for every object under Location
 |region|String|State or county name||
 |country|String|ISO-3166 Alpha-2 country codes|Required|
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 
 #### Contact Object
 |Element Name|Type|Description|Constraints|
@@ -303,7 +303,7 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 |email|String|Email to contact the responsible organization|Required|
 |phoneNumber|String|Number to contact the responsible organization||
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 
 ### Geospatial Location
 Locations may include geospatial coordinates, making it easier to find the location
@@ -316,7 +316,7 @@ Locations may include geospatial coordinates, making it easier to find the locat
 |geoType|GeoType|Token describing what the geo-point defines||
 |locationName|String|Nickname for the geo-point||
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 
 #### GeoType Tokens
 |Token Name|Description|
@@ -339,7 +339,7 @@ More advanced geographical data such as polygon markups in a map might be sought
 |encoded|String|Encoded polygon data||
 |description|String|Additional information about the polygon||
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 
 ### Auxiliary
 Contains additional information regarding the parking area, such as currency, time zone, and operating hours.
@@ -355,7 +355,7 @@ Contains additional information regarding the parking area, such as currency, ti
 |operatingHours|Schedule|Operating hours of the parking area||
 |surcharges|Surcharges|Additional charge information||
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 #### LocationType Tokens
 |Token Name|Description|
 |----------|-----------|
@@ -367,7 +367,7 @@ Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/mas
 |OTHER|Not in list, which means an update is required!|
 
 ### Schedule
-Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-object) object of the tariff.
+Is similar to the active [schedule](#active-schedule-object) object of the tariff.
 
 #### Schedule Object
 |Element Name|Type|Description|Constraints|
@@ -379,7 +379,7 @@ Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommu
 |date|Date|Specific date the parking area is open||
 
 #### Day Tokens (2)
-Schedule has the same day [tokens](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#day-tokens) as defined under tariff
+Schedule has the same day [tokens](#day-tokens) as defined under tariff
 
 ### Surcharges
 Might need to add more elements to surcharges
@@ -391,7 +391,7 @@ Might need to add more elements to surcharges
 |tax|Float|The tax percentage||
 |other|Float|Additional fee amount||
 
-Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
+Part of [Location](#location-object).
 
 ## Occupancy
 Occupancy data are the information that describes the occupancy status of a parking location. Occupancy includes information about how many parking spaces there are in total (supply) and how many that are occupied (both as a percentage and a total number). Occupancy data also includes the elements: average occupancy, the probability of finding a parking space, and individual parking space information. The purpose of the average occupancy information is to give a major idea of how well a pricing strategy has performed and the occupancy status. Like average occupancy, the purpose of probability element is to give a major idea of the current occupancy status. The purpose of individual parking space data is to give an accurate occupancy status.
@@ -412,7 +412,7 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |updateFrequency|Int|How often occupancy data is updated<br/> 30 -> once every 30 sec||
 |detectionMethod|DetectionType|How occupancy data is collected||
 |parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
-|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|When this object was created and when the static info was updated last|Required|
+|log|[Log](#log-object)|When this object was created and when the static info was updated last|Required|
 
 #### DetectionType tokens
 |Token Name|Description|
@@ -436,7 +436,7 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |spaceType| SpaceType|What kind of space it is||
 |updated| DateTime|When static info was updated last||
 
-Part of [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object).
+Part of [Occupancy](#occupancy-object).
 #### SpaceType
 |Token Name|Description|
 |----------|-----------|
