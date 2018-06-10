@@ -37,7 +37,7 @@ The elements that provides additional information for a tariff are: _tariffType_
 |maxPaidParkingTime|Int|Maximum parking time counting paid hours||
 |maxParkingTime|Int|Overall maximum parking time||
 |prepaid|Boolean|The fees are paid in advance||
-|resetTime|Int|The time a day ends, in minutes|Min value: 0 <br/> Max value: 1440|
+|resetTime|Int|The time next day begins in minutes|Min value: 0 <br/> Max value: 1440|
 |targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups||
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
