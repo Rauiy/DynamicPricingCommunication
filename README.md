@@ -273,13 +273,13 @@ TODO: determine all the required elements for every object under Location
 |------|------|-------|-------|
 |locationId|String(ID)|Unique ID|Required|
 |parentLocation|String(ID)|If this area is a subarea, then this should be the ID of the parent area||
-|sublocations|String(ID)|If this is a parent area, then this should contain the IDs of the sub areas||
+|sublocations|Array(String(ID))|If this is a parent area, then this should contain the IDs of the sub areas||
 |name|String|Name or nickname of the area||
 |areaNumber|String(ID)|Internal area numbering||
 |address| Address|Object containing address info||
 |contact| [Contact](#contact-object)|Object containing contanct info for the area||
-|geoLocation|[GeoLocation](#geolocation-object)|Simple geospatial information regarding the area||
-|polygons|[Polygon](#polygon-object)|Complex geospatial information regarding the area||
+|geoLocation|Array([GeoLocation](#geolocation-object))|Simple geospatial information regarding the area||
+|polygons|Array([Polygon](#polygon-object))|Complex geospatial information regarding the area||
 |auxiliary|[Auxiliary](#auxiliary-object)|Additional information of the area||
 |log|[Log](#log-object)|Information regarding who created and upated the information the last|Required|
 
@@ -351,7 +351,7 @@ Contains additional information regarding the parking area, such as currency, ti
 |public|Boolean|If the parking area is open to the public||
 |paid|Boolean|If the parking area requires payment||
 |locationType|LocationType|What type of parking area it is||
-|operatingHours|Schedule|Operating hours of the parking area||
+|operatingHours|Array(Schedule)|Operating hours of the parking area||
 |surcharges|Surcharges|Additional charge information||
 
 Part of [Location](#location-object).
@@ -374,11 +374,8 @@ Is similar to the active [schedule](#active-schedule-object) object of the tarif
 |scheduleId|String(ID)|Unique ID||
 |startTime|Int|Opening time|Min value: 0 <br /> Max value: 1440|
 |endTime|Int|Closing time|Min value: 0 <br /> Max value: 1440|
-|days|Day|Days the parking area is open||
+|days|Array([Day](#day-tokens))|Days the parking area is open||
 |date|Date|Specific date the parking area is open||
-
-#### Day Tokens (2)
-Schedule has the same day [tokens](#day-tokens) as defined under tariff
 
 ### Surcharges
 Might need to add more elements to surcharges
