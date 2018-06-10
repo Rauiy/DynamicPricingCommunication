@@ -44,11 +44,11 @@ The tariff information is divided into three parts: restriction, rate, and sched
 |------|------|-------|------|
 |tariffId|String(ID)|Unique ID of the tariff|Required|
 |locationId|String(ID)|ID of the location the tariff is meant for|Required|
-|restriciton|Restrictions|Object containint restrictions for the tariff|Required|
-|rate|Array([Rate](#rate-object))|Rate components|Required<br/>Min items: 1|
+|restriciton|Restrictions|Object containing restrictions of the tariff|Required|
+|rate|Array([Rate](#rate-object))|Rate components describing the parking fees|Required<br/>Min items: 1|
 |activeSchedule|Array([ActiveSchedule](#activeschedule-object))|Schedules defining the paid hours|Required<br/>Min items: 1|
 |validSchedule|Array([ValidSchedule](#validschedule-object))|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
-|log|[Log](#log-object)|Information regarding when the tariff object was created and latest updated|Required|
+|log|[Log](#log-object)|Information regarding when the tariff object was created and last updated|Required|
 
 ### Restrictions
 Restrictions object includes information that limits or provide additional information regarding a tariff. 
@@ -60,15 +60,15 @@ The elements that provides additional information for a tariff are: _tariffType_
 #### Restriction Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|tariffType|TariffType|What kind of tariff|Required|
-|maxFee|Float|Overall maximum fee for this tariff <br/> Might be restricted by max rates instead||
-|minFee|Float|Minimum fee a driver need to pay||
-|maxPaidParkingTime|Int|Maximum parking time counting paid hours||
-|maxParkingTime|Int|Overall maximum parking time||
-|prepaid|Boolean|The fees are paid in advance||
+|tariffType|TariffType|Defines the tariff type|Required|
+|maxFee|Float|Overall maximum fee for this tariff <br/> Might be restricted by max rates instead|Min value: 0|
+|minFee|Float|Minimum fee a driver need to pay|Min value: 0|
+|maxParkingTime|Int|Maximum allowed parking time||
+|maxPaidParkingTime|Int|Maximum allowed parking time during paid hours||
+|prepaid|Boolean|Defines if the fees are paid in advance||
 |resetTime|Int|The time next day begins in minutes|Min value: 0 <br/> Max value: 1440|
-|targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
-|vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
+|targetGroup|Array(ParkingType)|The target parking groups that the tariff is valid for _only_|Required<br/>Default: PUBLIC|
+|vehicles|Array(VehicleType)|The target vehicle types that the tariff is valid for _only_||
 
 Part of [Tariff](#tariff-object).
 #### TariffType Tokens
@@ -105,11 +105,11 @@ The rate is the smallest component of a parking fee, which describes the price d
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
 |order|Int|Unique number defining the priority of the rate. <br />Lower equals higher priority|Required<br/>Min value: 0|
-|value|Float|Number defining the fee|Required<br/>Min value: 0|
-|interval|Int|Number defining the period|Required<br/>Min value: 1|
-|intervals|Int|Number defining how many times the period can be repeated|Required<br/>Min value: 1|
+|value|Float|Number defining the fee value|Required<br/>Min value: 0|
+|interval|Int|Number defining how long the value is valid for|Required<br/>Min value: 1|
+|intervals|Int|Number defining how many times the rate should be repeated at most|Required<br/>Min value: 1|
 |unit|UnitType|Token defining the time unit of interval|Default: MIN|
-|repeat|Boolean|Set true if the rate should be repeated infinitely|Default: false|
+|repeat|Boolean|Set true if the rate should be repeated until stopped|Default: false|
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
 |countOnlyPaidTime|Boolean|Set true if the interval only should only count for paid hours|Default: false|
 
@@ -180,8 +180,8 @@ The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) hav
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
 |activeScheduleId|String(ID)|Unique ID|Required|
-|startTime|Int|Start time of the paid hours |Required<br/>Min value: 0 <br />Max value: 1440|
-|endTime|Int|End time of the paid hours|Required<br/>Min value: 0 <br />Max value: 1440|
+|startTime|Int|Inclusive start time of the paid hours |Required<br/>Min value: 0 <br />Max value: 1440|
+|endTime|Int|Exclusive end time of the paid hours|Required<br/>Min value: 0 <br />Max value: 1440|
 |days|Array(Days)|The days the tariff are active, i.e. days with parking fees |Required<br/>Only unique days|
 
 Part of [Tariff](#tariff-object).
@@ -208,8 +208,8 @@ An activeSchedule might need more than one schedule unit to express the intentio
 |validScheduleId|String(ID)|Unique ID|Required|
 |validFrom|DateTime|Date defining when the tariff starts being valid<br />i.e. can be used|Required|
 |validTo|DateTime|Date defining when the tariff stop being valid<br />i.e. cannot be used anymore|Required|
-|validTimeFrom|Int|The time when the tariff can be started|Required<br/>Min value: 0 <br />Max value: 1440|
-|validTimeTo|Int|The time when the tariff cannot be started anymore|Required<br/>Min value: 0 <br />Max value: 1440|
+|validTimeFrom|Int|The time when the tariff is valid, i.e. can be started|Required<br/>Min value: 0 <br />Max value: 1440|
+|validTimeTo|Int|The time when the tariff is invalid, i.e. cannot be started|Required<br/>Min value: 0 <br />Max value: 1440|
 |validDays|Arrays(Day)|The days the tariff can be started|Required<br/>Only unique days|
 
 Part of [Tariff](#tariff-object).
@@ -255,8 +255,8 @@ These tokens are also used for [Location](#schedule-object)
 #### Log Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|-------|
-|updated| DateTime|When the object was updated last|Required|
-|user| String|Name/Username of the user that updated the object last|Required|
+|updated| DateTime|When the object was last updated|Required|
+|user| String|Name/Username of the user that last updated the object|Required|
 |created| DateTime|When the object was created|Required|
 |creator| String|Name/Username of the creator of the object|Required|
 
