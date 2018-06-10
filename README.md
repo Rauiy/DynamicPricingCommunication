@@ -1,10 +1,14 @@
 # Dynamic Pricing Communication
 
+##### Table of Contents  
+[Tariff](#Tariff)  
+
 # Protocol format
 The protocol’s format is defined for JSON format.
 
 The parking data included in the protocol’s format, are referred to as elements. The elements are further divided into three categories: location, occupancy, and tariff. The three categories act as root objects and hold the other elements together. The root elements are separated into three different arrays under a parent object. Arrays are used for the root element as there might be multiple occurrences of each type. Any object that has multiple occurrences, such as the root objects, include a unique identification string. The three categories and what they include is explained in the following subsections.
 
+<a name="Tariff"/>
 ## Tariff
 Tariff data is the object that describes the parking fees of a parking location. Tariff data is included in the protocol to enable fast and easy sharing of new tariffs. There exists a wide variety of how a tariff can be expressed. The proposed protocol aims to express both the simplest and the most complex tariff while maintaining a generic method of expressing tariffs. 
 
