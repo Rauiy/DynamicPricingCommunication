@@ -18,13 +18,13 @@ The tariff information is divided into three parts: restriction, rate, and sched
 ### Tariff Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|tariffId|String(ID)|Unique ID of the tariff||
-|locationId|String(ID)|ID of the location the tariff is meant for||
-|restriciton|Restriction|Object containint restrictions for the tariff||
-|rate|Array(Rate)|Rate components||
-|activeSchedule|Array(ActiveSchedule)|Schedules defining the paid hours||
-|validSchedule|Array(ValidSchedule)|Schedules defining when the tariff is valid||
-|log|Log|Information regarding when the tariff object was created and latest updated||
+|tariffId|String(ID)|Unique ID of the tariff|Required|
+|locationId|String(ID)|ID of the location the tariff is meant for|Required|
+|restriciton|Restriction|Object containint restrictions for the tariff|Required|
+|rate|Array(Rate)|Rate components|Required<br/>Min items: 1|
+|activeSchedule|Array(ActiveSchedule)|Schedules defining the paid hours|Required<br/>Min items: 1|
+|validSchedule|Array(ValidSchedule)|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
+|log|Log|Information regarding when the tariff object was created and latest updated|Required|
 
 ### Restriction
 Restrictions object includes information that limits or provide additional information regarding a tariff. 
@@ -36,14 +36,14 @@ The elements that provides additional information for a tariff are: _tariffType_
 #### Restriction Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|tariffType|TariffType|What kind of tariff||
+|tariffType|TariffType|What kind of tariff|Required|
 |maxFee|Float|Overall maximum fee for this tariff <br/> Might be restricted by max rates instead||
 |minFee|Float|Minimum fee a driver need to pay||
 |maxPaidParkingTime|Int|Maximum parking time counting paid hours||
 |maxParkingTime|Int|Overall maximum parking time||
 |prepaid|Boolean|The fees are paid in advance||
 |resetTime|Int|The time next day begins in minutes|Min value: 0 <br/> Max value: 1440|
-|targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups||
+|targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
 #### TariffType Tokens
@@ -51,8 +51,6 @@ The elements that provides additional information for a tariff are: _tariffType_
 |----------|-----------|
 |REGULAR|The tariff has stoppable rates|
 |FIXED|The tariff only has fixed rates|
-|EVENT|???|
-|CONTRACT||
 
 #### ParkingType Tokens
 |Token Name|Description|
@@ -60,18 +58,20 @@ The elements that provides additional information for a tariff are: _tariffType_
 |PRIVATE|Private tariff|
 |PERSONNEL|Tariff is for personnel only|
 |RESIDENTIAL|Tariff is for the residents in the area|
-|INDIVIDUAL|The tariff targetse a single|
+|INDIVIDUAL|The tariff targets a single driver|
 |PUBLIC|The tariff is open to the public|
 
+TODO: Determine all necessery vehicle types
 #### VehicleType Tokens
 |Token Name|Description|
 |----------|-----------|
-|CAR||
+|CAR|Personal car|
 |VAN||
 |MC||
 |TRUCK||
-|ELECTRIC||
+|ELECTRIC|Any kind of electric vehicle|
 |BUS||
+|...||
 
 ### Rate
 The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates.
@@ -79,10 +79,10 @@ The rate is the smallest component of a parking fee, which describes the price d
 #### Rate Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|order|Int|Unique number defining the priority of the rate. <br />Lower equals higher priority|Min value: 0|
-|value|Float|Number defining the fee|Min value: 0|
-|interval|Int|Number defining the period|Min value: 1|
-|intervals|Int|Number defining how many times the period can be repeated|Min value: 1|
+|order|Int|Unique number defining the priority of the rate. <br />Lower equals higher priority|Required<br/>Min value: 0|
+|value|Float|Number defining the fee|Required<br/>Min value: 0|
+|interval|Int|Number defining the period|Required<br/>Min value: 1|
+|intervals|Int|Number defining how many times the period can be repeated|Required<br/>Min value: 1|
 |unit|UnitType|Token defining the time unit of interval|Default: MIN|
 |repeat|Boolean|Set true if the rate should be repeated infinitely|Default: false|
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
@@ -97,6 +97,7 @@ The rate is the smallest component of a parking fee, which describes the price d
 |MONTH|The rate interval is given in monts|
 |YEAR|The rate interval is given in years|
 
+#### Rate Examples
 The simplest tariff with a constant cost per time units can be expressed using one rate component. However, a tariff can be more advanced than a constant cost per time unit, which requires more than 1 rate component to express the tariff.
 For example: see **Rate example 1**, which describes a pricing strategy: the first-hour costs 10 SEK, the second hour is free, and thereafter the cost is 20 SEK per hour. Because no unit was provided in the rates, the interval is assumed to be in minutes. 
 
@@ -151,11 +152,12 @@ The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) hav
 #### ActiveSchedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|activeScheduleId|String(ID)|Unique ID||
-|startTime|Int|Start time of the paid hours |Min value: 0 <br />Max value: 1440|
-|endTime|Int|End time of the paid hours|Min value: 0 <br />Max value: 1440|
-|days|Array(Days)|The days the tariff are active, i.e. days with parking fees |Only unique days|
+|activeScheduleId|String(ID)|Unique ID|Required|
+|startTime|Int|Start time of the paid hours |Required<br/>Min value: 0 <br />Max value: 1440|
+|endTime|Int|End time of the paid hours|Required<br/>Min value: 0 <br />Max value: 1440|
+|days|Array(Days)|The days the tariff are active, i.e. days with parking fees |Required<br/>Only unique days|
 
+#### Active Schedule Examples
 An activeSchedule might need more than one schedule unit to express the intention because the active time might vary per day. Therefore, each schedule requires a locally unique ID. For example, Active Schedule example shows a tariff is active during from 07:00 to 17:00 (16:59:59) weekdays and from 07:00 to 14:00 (13:59:59) Saturdays, and thus it requires at least two schedule units to describe. Note that there is no time defined for Sundays, hence, there is no parking fee during Sundays.
 
 ##### Active Schedule example
@@ -175,12 +177,14 @@ An activeSchedule might need more than one schedule unit to express the intentio
 #### ValidSchedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|validScheduleId|String(ID)|Unique ID||
-|validFrom|DateTime|Date defining when the tariff starts being valid<br />i.e. can be used||
-|validTo|DateTime|Date defining when the tariff stop being valid<br />i.e. cannot be used anymore||
-|validTimeFrom|Int|The time when the tariff can be started|Min value: 0 <br />Max value: 1440|
-|validTimeTo|Int|The time when the tariff cannot be started anymore|Min value: 0 <br />Max value: 1440|
-|validDays|Arrays(Day)|The days the tariff can be started|Only unique days|
+|validScheduleId|String(ID)|Unique ID|Required|
+|validFrom|DateTime|Date defining when the tariff starts being valid<br />i.e. can be used|Required|
+|validTo|DateTime|Date defining when the tariff stop being valid<br />i.e. cannot be used anymore|Required|
+|validTimeFrom|Int|The time when the tariff can be started|Required<br/>Min value: 0 <br />Max value: 1440|
+|validTimeTo|Int|The time when the tariff cannot be started anymore|Required<br/>Min value: 0 <br />Max value: 1440|
+|validDays|Arrays(Day)|The days the tariff can be started|Required<br/>Only unique days|
+
+#### Valid Schedule Examples
 
 Like activeSchedules, multiple validSchedules might be necessary, and therefore locally unique IDs is required. For example: see Figure 16, which says that a tariff can be started between 1 January 2018 to 30 June 2018, Mondays to Fridays, from 00:00 to 09:00 (08:59:59), and from 21:00 to 00:00 (23:59:59). 
 
@@ -217,87 +221,127 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 |HOLIDAY|Also known as red days|
 |DAY_BEFORE_RED_DAY|Also know as day before holiday|
 
-
 ## Location
 The purpose of location data is to map parking-related information to a location. 
 Mandatory for the location data is to include a globally unique identifier for each location.
 
-#### Location Object
+TODO: determine all the required elements for every object under Location
+
+### Location Object
+|Element Name|Type|Description|Constraints|
+|------|------|-------|-------|
+|locationId|String(ID)|Unique ID|Required|
+|parentLocation|String(ID)|If this area is a subarea, then this should be the ID of the parent area||
+|sublocations|String(ID)|If this is a parent area, then this should contain the IDs of the sub areas||
+|name|String|Name or nickname of the area||
+|areaNumber|String(ID)|Internal area numbering||
+|address| Address|Object containing address info||
+|contact| Contact|Object containing contanct info for the area||
+|geoLocation|GeoLocation|Simple geospatial information regarding the area||
+|polygons|Polygon|Complex geospatial information regarding the area||
+|auxiliary|Auxiliary|Additional information of the area||
+|log|Log|Information regarding who created and upated the information the last|Required|
+
+#### Address Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|locationId|String(ID)|||
-|parentLocation|String(ID)|||
-|sublocations|String(ID)|||
-|name|String|||
-|areaNumber|String(ID)|||
-|address| Address|||
-|contact| Contact|||
-|geoLocation|GeoLocation|||
-|polygons|Polygon|||
-|auxiliary|Auxiliary|||
-|log|Log|||
- 
-#### Address 
+|street|String|Full street address including street number|Required|
+|postalCode|String|Postal/zip code of the area|Required|
+|city|String|City name|Required|
+|region|String|State or county name||
+|country|String|ISO-3166 Alpha-2 country codes|Required|
+
+#### Contact Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|street|String|||
-|postalCode|String|||
-|city|String|||
-|region|String|||
-|country|String|||
+|contactName|String|Name of the contact person||
+|organization|String|Name of the responsible organization|Required|
+|email|String|Email to contact the responsible organization|Required|
+|phoneNumber|String|Number to contact the responsible organization||
 
-
-#### Contact
-|Element Name|Type|Description|Constraints|
-|------|------|-------|------|
-|contactName|String|||
-|organization|String|||
-|email|String|||
-|phoneNumber|String|||
-
-
-#### GeoLocation 
+#### GeoLocation Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
 |latitude|String|||
 |longitude|String|||
-|geoType|GeoType|||
-|locationName|String|||
+|geoType|GeoType|Token describing what the geo-point defines||
+|locationName|String|Nickname for the geo-point||
 
-#### Polygon
+### Polygon
+More advanced geographical data such as polygon markups in a map might be sought after. A commonly used format which provides such functionalities is KML. However, KML is a format based on XML with their own definition for file structures and might be hard to include in the JSON representation. However, some might want other formats than KML. Therefore, the format includes an object for attaching a reference providing the location of the polygon files. The polygon object also supports the use of encoded polygon data as an encrypted string.
+
+#### Polygon Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|type|String|||
-|ref|String|||
-|encoded|String|||
-|description|String|||
+|type|String|String defining what type of polygon this is||
+|ref|String|URL to external polygon data||
+|encoded|String|Encoded polygon data||
+|description|String|Additional information about the polygon||
 
-#### Auxiliary 
+### Auxiliary
+Contains additional information regarding the parking area. 
+#### Auxiliary Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|currency|Currency|||
-|timeZone|String|||
-|public|Boolean|||
-|paid|Boolean|||
-|locationType|LocationType|||
-|operatingHours|Schedule|||
-|surcharges|Surcharges|||
+|currency|Currency|ISO-4217 currency codes||
+|timeZone|String|ISO 8601 Extended Notation (+|-hh:mm)||
+|public|Boolean|If the parking area is open to the public||
+|paid|Boolean|If the parking area requires payment||
+|locationType|LocationType|What type of parking area it is||
+|operatingHours|Schedule|Opening hours of the parking area||
+|surcharges|Surcharges|Additional charge information||
 
-#### Schedule 
+### Schedule
+Is similar to the active [schedule][#active-schedules] object of the tariff
+
+#### Schedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|scheduleId|ID|||
-|startTime|Int|||
-|endTime|Int|||
-|days|Days|||
-|date|Date|||
+|scheduleId|String(ID)|Unique ID||
+|startTime|Int|Opening time|Min value: 0 <br /> Max value: 1440|
+|endTime|Int|Closing time|Min value: 0 <br /> Max value: 1440|
+|days|Days|Days the parking area is open||
+|date|Date|Specific date the parking area is open||
 
-#### Surcharges
+### Surcharges
+Might need to add more elements to surcharges
+
+#### Surcharges Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
-|taxIncluded|Boolean|||
-|tax|Float|||
-|other|Float|||
+|taxIncluded|Boolean|If taxes is included in the price||
+|tax|Float|The tax percentage||
+|other|Float|Additional fee amount||
 
 ## Occupancy
-Occupancy data are the information that describes the occupancy status of a parking location. Occupancy includes information about how many parking spaces there are in total (supply) and how many that are occupied (both as a percentage and a total number). Both supply and occupied are part of the core information of occupancy data. Therefore, supply and occupied are mandatory elements for the occupancy data. For additional features, the occupancy data also includes the elements: average occupancy, the probability of finding a parking space, and individual parking space information. The purpose of the average occupancy information is to give a major idea of how well a pricing strategy has performed and the occupancy status. Like average occupancy, the purpose of probability element is to give a major idea of the current occupancy status. The purpose of individual parking space data is to give an accurate occupancy status.
+Occupancy data are the information that describes the occupancy status of a parking location. Occupancy includes information about how many parking spaces there are in total (supply) and how many that are occupied (both as a percentage and a total number). Occupancy data also includes the elements: average occupancy, the probability of finding a parking space, and individual parking space information. The purpose of the average occupancy information is to give a major idea of how well a pricing strategy has performed and the occupancy status. Like average occupancy, the purpose of probability element is to give a major idea of the current occupancy status. The purpose of individual parking space data is to give an accurate occupancy status.
+
+TODO: Determine what occupancy approach is best, those elements should be set as required.
+TODO: Decide if average occupancy should be updated per day, as update frequency, or something else.
+TODO: Determine what update frequency should be provided in for unit (seconds?, minutes?, or days?)
+### Occupancy Object
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|locationI|ID|ID of the parking area||
+|supply|Int|Total number of parking spaces||
+|occupied|Int|Number of parking spaces that is currently occupied||
+|occupiedPct|Int|Number of parking spaces occupied in percentage|Min value: 0 <br /> Max value: 100|
+|average|Int|Average occupation in percentage|Min value: 0 <br /> Max value: 100|
+|probability|Int|The probability of finding a parking spot|Min value: 0 <br /> Max value: 100|
+|updateFrequency|Int|How often occupancy data is updated<br/> 30 -> once every 30 sec||
+|detectionMethod|DetectionType|How occupancy data is collected||
+|parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
+|log|Log|When this object was created and when the static info was updated last|Required|
+
+#### ParkingSpace Object
+|Element Name|Type|Description|Constraints|
+|------|------|-------|------|
+|spaceId|String(ID)|Unique ID||
+|spaceNumber|String(ID)|Local space numbering||
+|available|Boolean|If the parking space is available||
+|frequency|Int|How often the status is updated<br/> 30 -> once every 30 sec|Min value: 0|
+|occupiedFrom |DateTime|When the occupation started||
+|occupiedTo|DateTime|When the occupation is expected to end||
+|spaceType| SpaceType|What kind of space it is||
+|updated| DateTime|When static info was updated last||
+
