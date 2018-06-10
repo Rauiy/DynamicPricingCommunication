@@ -14,7 +14,6 @@ Tariff data is the object that describes the parking fees of a parking location.
 
 The tariff information is divided into three parts: restriction, rate, and schedule data. Because each location can have multiple tariff objects, each tariff must be provided with a globally unique tariff ID and mapped with a location ID.  
 
-<a name="tariffobject"/>
 ### Tariff Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
