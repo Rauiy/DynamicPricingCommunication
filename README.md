@@ -2,7 +2,8 @@
 
 ##### Table of Contents   
 * [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
-.* [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
+
+..* [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
 
 # Protocol format
 The protocol’s format is defined for JSON format.
