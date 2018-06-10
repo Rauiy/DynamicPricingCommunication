@@ -1,5 +1,5 @@
 ## Project: Dynamic Pricing Communication
-## Author: Steven Ly sly@kth.se
+## Author: Steven Ly sly@kth.se updated: 2018-06-10
 ##
 type Query{
 	#locations: [Location], use location with no arguments (no filters)
@@ -165,7 +165,7 @@ enum GeoType {
 	ENTRY
 	EXIT
 	ACCESS
-	UI
+	METER
 	POINT
 	OTHER
 }
@@ -209,29 +209,16 @@ enum Days {
 	HOLIDAY
 }
 
-enum TariffType { # maybe change to fixed boolean
-	REGULAR # Hourly fee?
-	FIXED # or bucket
-	## Special types...
-	EVENT # Notation of special rate type that are temp?
-	CONTRACT #
-}
-
-enum Currency { # ISO 4217 codes
-	AUD
-	EUR
-	USD
-	GBP
-	SEK
-	NOK
-	#...
+enum TariffType {
+	REGULAR
+	FIXED
 }
 
 enum ParkingType {
 	PRIVATE
 	PERSONNEL
 	RESIDENTIAL
-	INDIVIDUAL #  the tariff targetse a single
+	INDIVIDUAL
 	PUBLIC
 }
 
@@ -245,11 +232,11 @@ enum VehicleType {
 }
 
 enum UnitType{
-	MIN # or TIME Indicates that the interval/period is expressed in minutes
-	DAY	# Indicates that the intervall is in calendar days (Real days resets at reset time)
-	WEEK # Indicates weeks, resets at start of week
-	MONTH # Indicates months, resets at start of month
-	YEAR # Indicates year, resets at start of year
+	MIN
+	DAY
+	WEEK
+	MONTH
+	YEAR
 }
 
 scalar DateTime
