@@ -7,7 +7,7 @@
 **_ADD NOTICE_**
 
 ## Table of Contents   
-* [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
+* [Tariff](#tariff)
   * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
   * [Restrictions](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#restrictions)
   * [Rate](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate)
@@ -375,7 +375,7 @@ Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommu
 |scheduleId|String(ID)|Unique ID||
 |startTime|Int|Opening time|Min value: 0 <br /> Max value: 1440|
 |endTime|Int|Closing time|Min value: 0 <br /> Max value: 1440|
-|days|Days|Days the parking area is open||
+|days|Day|Days the parking area is open||
 |date|Date|Specific date the parking area is open||
 
 #### Day Tokens (2)
