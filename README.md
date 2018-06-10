@@ -4,6 +4,8 @@
 |:---:|:---:|:---:|:---:|
 |2018-06-10|Steven Ly|0.1|Added format description as readme|
 
+**_ADD NOTICE_**
+
 ## Table of Contents   
 * [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
   * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
