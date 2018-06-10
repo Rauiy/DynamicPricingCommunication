@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Tariff",
+  "description": "Part of dynamic pricing communication protocol",
+  "type": "object",
+  "properties": {
+    "tariffId": {
+      "description": "The local unique identifier for a tariff",
+      "type": "string",
+      "required": true
+    },
+    "locationId":{
+      "description": "The global unique identifier of the location the tariff belongs to",
+      "type": "string",
+      "required": true
+    },
+    "supersedes":{
+      "description": "The local unique identifier of the tariff this tariff supersedes",
+      "type": "string"
+    },
+    "restrictions":{
+      "description": "The object that holds restriction information",
+      "type": "object",
+      "required": true,
+      "properties":{
+        "tariffType":{
+          "description": "Token describing how prices are charged. fixed + progressive = stepprogressive",
+          "type": "string",
+          "pattern": "^REGULAR$|^FIXED$|^EVENT$|^CONTRACT$",
+          "required": true
+        },
+        "prepaid":{
+          "description": "If prices are charged in advance. prepaid + fixed = bucket",
+          "type": "boolean"
+        },
+        "maxFee":{
+          "description": "Maximum number of fee that will be charged",
+          "type": "float",
+          "minimum": 0
+        },
+        "minFee":{
+          "description": "Minimum number of fee that will be charged",
+          "type": "float",
+          "minimum": 0
+        },
+        "maxParkingTime":{
+          "description": "Maximum allowed parking time",
+          "type": "number",
+          "minimum": 0
+        },
+        "maxPaidParkingTime":{
+          "description": "Maximum allowed parking time during paid hours",
+          "type": "number",
+          "minimum": 0
+        },
+        "resetTime":{
+          "description": "The time in minutes past midnight, that a day starts, 0 = 00:00:00, 1440 = 00:00:00 (next day)",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1440
+        },
+        "targetGroup":{
+          "description": "The target parking groups that the tariff is valid for",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^PUBLIC$|^RESIDENTIAL$|^PERSONNEL$|^PRIVATE$|^INDIVIDUAL$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "vehicles":{
+          "description": "The target vehicle types that the tariff is valid for",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CAR$|^VAN$|^MC$|^TRUCK$|^ELECTRIC$|^BUS$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      }
+    },
+    "rates":{
+      "description": "The unique identifier of the location the tariff belongs to",
+      "type": "array",
+      "required": true,
+      "items":{
+        "title":"rate",
+        "type":"object",
+        "properties":{
+          "order":{
+            "description":"which order rates applies",
+            "type":"number",
+            "required": true
+          },
+          "value":{
+            "description":"the rate value",
+            "type":"number",
+            "required": true,
+            "minimum": 0
+          },
+          "interval":{
+            "description":"the interval period which the rate counts for",
+            "type":"number",
+            "required": true,
+            "minimum": 1
+          },
+          "intervals":{
+            "description":"how many time the rate should be repeated",
+            "type":"number",
+            "minimum":1,
+            "required": true
+          },
+          "unit":{
+            "description":"the date time unit the interval is defined for",
+            "type":"string",
+            "pattern": "^MIN$|^DAY$|^WEEK$|^MONTH$|^YEAR$"
+          },
+          "repeat":{
+            "description":"if the rate should repeated infinitely",
+            "type":"boolean"
+          },
+          "max":{
+            "description":"if the rate represents a maximum fee, such rates should always be in the end of the list",
+            "type":"boolean"
+          },
+          "countOnlyPaidTime":{
+            "description":"(prepaid) if the parking time should only count towards paid parking time",
+            "type":"boolean"
+          }
+        }
+      }
+    },
+    "activeSchedules":{
+      "description": "Schedules defining when the tariff is active",
+      "type": "array",
+      "required": true,
+      "items":{
+        "title": "activeSchedule",
+        "type": "object",
+        "properties":{
+          "activeScheduleId":{"type":"string", "required": true},
+          "startTime":{
+            "description": "Inclusive start time, which means that 0 equals 00:00:00 with seconds",
+            "type":"number",
+            "minimum": 0,
+            "maximum": 1440,
+            "required": true
+          },
+          "endTime":{
+            "description": "Exclusive end time, which means that with seconds 1440 = 23:59:59 and 300 = 05:59:59",
+            "type":"number",
+            "minimum": 0,
+            "maximum": 1440,
+            "required": true
+          },
+          "days":{
+            "type":"array",
+            "items":{
+              "type":"string",
+              "pattern": "^MONDAY|^TUESDAY$|^WEDNESDAY$|^THURSDAY$|^FRIDAY$|^SATURDAY$|^SUNDAY$|^DAY_BEFORE_RED_DAY$|^HOLIDAY$"
+            },
+            "required": true
+          }
+        }
+      }
+    },
+    "validSchedules":{
+      "description": "Schedules defining when the tariff is valid",
+      "type": "array",
+      "required": true,
+      "items":{
+        "title": "validSchedule",
+        "type": "object",
+        "properties": {
+          "validScheduleId": {"type": "string", "required": true},
+          "validFrom": {"type": "date-time", "required": true},
+          "validTo": {"type": "date-time", "required": true},
+          "validTimeFrom": {
+            "description": "inclusive start time, which means that 0 equals 00:00:00 with seconds",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1440,
+            "required": true
+          },
+          "validTimeTo": {
+            "description": "Exclusive to time, which means that with seconds 1440 = 23:59:59 and 300 = 05:59:59",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1440,
+            "required": true
+          },
+          "validDays": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^MONDAY|^TUESDAY$|^WEDNESDAY$|^THURSDAY$|^FRIDAY$|^SATURDAY$|^SUNDAY$|^DAY_BEFORE_RED_DAY$|^HOLIDAY$"
+            },
+            "minItems": 1,
+            "required": true
+
+          }
+        }
+      }
+    },
+    "log":{
+      "description":"Log object containing information when the tariff was latest updated and by whom, same for when it was created",
+      "type": "object",
+      "properties":{
+        "updated":{"type":"date", "required":true},
+        "user":{"type":"string", "required":true},
+        "created":{"type":"date", "required":true},
+        "creator":{"type":"string", "required":true}
+      }
+    }
+  }
+}

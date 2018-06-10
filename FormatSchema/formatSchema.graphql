@@ -1,0 +1,258 @@
+## Project: Dynamic Pricing Communication
+## Author: Steven Ly sly@kth.se
+##
+type Query{
+	#locations: [Location], use location with no arguments (no filters)
+	location(locationId: [ID], areaNumber:ID, name: String, country: String, city: String): [Location]
+
+	#occupancies: [Occupancy], use occupancy with no argumets (no filters)
+	occupancy(locationId: [ID]): [Occupancy]
+
+	#tariffs: [Tariff], use tariff with no arguments (no filters)
+	tariff(locationId: [ID], valid: Boolean, random: Int): [Tariff]
+}
+
+type Location {
+	locationId: ID!
+	parentLocation: ID
+	sublocations: [ID]
+	name: String
+	areaNumber: ID
+	address: Address!
+	contact: Contact!
+	geoLocation: [GeoLocation]
+	polygons: [Polygon]
+	auxiliary: Auxiliary
+	log: Log!
+}
+
+type Address {
+	number: String #depreciated
+	street: String!
+	postalCode: String!
+	city: String!
+	region: String! # State, county etc...
+	country: String! # ISO-3166 Alpha-2
+}
+
+type Contact {
+	contactName: String
+	organization: String!
+	email: String!
+	phoneNumber: String
+}
+
+type GeoLocation {
+	latitude: String!
+	longitude: String!
+	geoType: GeoType!
+	locationName: String
+}
+
+type Polygon{
+	type: String! #type such as kml
+	ref: String!
+	encoded: String #Encoded polygons data
+	description: String
+}
+
+type Auxiliary {
+	currency: Currency
+	timeZone: String
+	public: Boolean
+	paid: Boolean
+	locationType: LocationType
+	operatingHours: [Schedule]
+	surcharges: Surcharges
+}
+
+type Schedule {
+	scheduleId: ID!
+	startTime: Int
+	endTime: Int
+	days: [Days] # Regular schedule applicable to week days // Might need to change to a simpler format later
+	date: Date
+}
+
+type Surcharges { #
+	taxIncluded: Boolean
+	tax: Float
+	other: Float
+}
+
+type Occupancy { # probability and average maybe?
+	locationId: ID!
+	supply: Int!
+	occupied: Int!
+	occupiedPct: Int
+	average: Int
+	probability: Int
+	updateFrequency: Int
+	detectionMethod: DetectionType
+	parkingSpace: [ParkingSpace]
+	log: Log!
+}
+
+type ParkingSpace {
+	spaceId: ID!
+	spaceNumber: Int
+	available: Boolean
+	frequency: Int
+	occupiedFrom: DateTime
+	occupiedTo: DateTime
+	spaceType: SpaceType
+	updated: DateTime
+}
+
+type Tariff {
+	tariffId: ID!
+	locationId: ID!
+	supersedes: String # Haven't found any use yet...
+	restrictions: Restrictions!
+	rates: [Rate]!
+	activeSchedules: [activeSchedule]! # Describes when the tariff can be used / Null
+	validSchedules:[validSchedule]! # Describes when the tariff can be start / Null -> no constrict
+	log: Log!
+}
+
+type Restrictions {
+	tariffType: TariffType! # Fixed, regular, etc...
+	maxFee: Float
+	minFee: Float
+	maxPaidParkingTime: Int #maybe makes no sense, count only taxable time towards max not
+	maxParkingTime: Int #Max parking time
+	prepaid: Boolean # Also advanced payment
+	resetTime: Int # Daily reset time in minutes
+	targetGroup: [ParkingType] # target group, target audience etc..
+	vehicles: [VehicleType] # Type of vehicles that the tariff are applicable for
+}
+
+type Rate {
+	order: Int! #Also uniquely identifies rates per tariff.
+	value: Float!
+	interval: Int!
+	intervals: Int
+	unit: UnitType # Defined as another unit
+	repeat: Boolean # The rate should be repeated infinitly
+	max: Boolean # The rate is a maximum fee for a set period
+	countOnlyPaidTime: Boolean # If the fixed prepaid should only count towards paid parking time (Free parking times are added to the total parking time)
+}
+
+type validSchedule {
+	validScheduleId: ID!
+	validFrom: DateTime! # Used for start schedules/ Or define a span of active dates
+	validTo: DateTime! # Used for start schedules/ Or define a span of active dates
+	startTime: Int!
+	endTime: Int!
+	validDays: [Days]! # Regular schedule applicable to week days // Might need to change to a simpler format later
+}
+
+type activeSchedule {
+	activeScheduleId: ID!
+	startTime: Int!
+	endTime: Int!
+	days: [Days]! # Regular schedule applicable to week days // Might need to change to a simpler format later
+}
+
+type Log {
+	updated: DateTime!
+	user: String!
+	created: DateTime!
+	creator: String!
+}
+
+enum GeoType {
+	ENTRY
+	EXIT
+	ACCESS
+	UI
+	POINT
+	OTHER
+}
+
+enum LocationType {
+	ABOVE_GROUND_GARAGE
+	UNDERGROUND_GARAGE
+	ON_STREET
+	SURFACE_LOT
+	PRIVATE
+	OTHER
+}
+
+enum DetectionType {
+	MANUALLY
+	SPACE_SENSOR
+	VIDEO_COUNT
+	IMAGE_ANALYTIC
+	VIDEO_ANALYTIC
+	CROWD_SOURCING
+}
+
+enum SpaceType {
+	RESERVED
+	UNRESERVED
+	EVENT
+	RESERVATION
+	VALET
+	OTHER
+}
+
+enum Days {
+	MONDAY
+	TUESDAY
+	WEDNESDAY
+	THURSDAY
+	FRIDAY
+	SATURDAY
+	SUNDAY
+	DAY_BEFORE_RED_DAY
+	HOLIDAY
+}
+
+enum TariffType { # maybe change to fixed boolean
+	REGULAR # Hourly fee?
+	FIXED # or bucket
+	## Special types...
+	EVENT # Notation of special rate type that are temp?
+	CONTRACT #
+}
+
+enum Currency { # ISO 4217 codes
+	AUD
+	EUR
+	USD
+	GBP
+	SEK
+	NOK
+	#...
+}
+
+enum ParkingType {
+	PRIVATE
+	PERSONNEL
+	RESIDENTIAL
+	INDIVIDUAL #  the tariff targetse a single
+	PUBLIC
+}
+
+enum VehicleType {
+	CAR
+	VAN
+	MC
+	TRUCK
+	ELECTRIC
+	BUS
+}
+
+enum UnitType{
+	MIN # or TIME Indicates that the interval/period is expressed in minutes
+	DAY	# Indicates that the intervall is in calendar days (Real days resets at reset time)
+	WEEK # Indicates weeks, resets at start of week
+	MONTH # Indicates months, resets at start of month
+	YEAR # Indicates year, resets at start of year
+}
+
+scalar DateTime
+scalar Date
+scalar Time
+
