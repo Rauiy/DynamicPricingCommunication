@@ -42,13 +42,13 @@ The tariff information is divided into three parts: restriction, rate, and sched
 |------|------|-------|------|
 |tariffId|String(ID)|Unique ID of the tariff|Required|
 |locationId|String(ID)|ID of the location the tariff is meant for|Required|
-|restriciton|Restriction|Object containint restrictions for the tariff|Required|
-|rate|Array(Rate)|Rate components|Required<br/>Min items: 1|
-|activeSchedule|Array(ActiveSchedule)|Schedules defining the paid hours|Required<br/>Min items: 1|
-|validSchedule|Array(ValidSchedule)|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
-|log|Log|Information regarding when the tariff object was created and latest updated|Required|
+|restriciton|Restrictions|Object containint restrictions for the tariff|Required|
+|rate|Array([Rate](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#rate-object))|Rate components|Required<br/>Min items: 1|
+|activeSchedule|Array([ActiveSchedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#activeschedule-object))|Schedules defining the paid hours|Required<br/>Min items: 1|
+|validSchedule|Array([ValidSchedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#validschedule-object))|Schedules defining when the tariff is valid|Required<br/>Min items: 1|
+|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|Information regarding when the tariff object was created and latest updated|Required|
 
-### Restriction
+### Restrictions
 Restrictions object includes information that limits or provide additional information regarding a tariff. 
 
 The elements that restricts tariffs are: _argetGroup_, _vehicles_, _maxParkingTime_, _maxPaidParkingTime_, _maxFee_, and _minFee_.  All these elements are optional to include in the format. Therefore, if any of the elements are unassigned it means that the tariff is not restricted in any of the specific ways. 
@@ -98,6 +98,7 @@ TODO: Determine all necessery vehicle types
 ### Rate
 The rate is the smallest component of a parking fee, which describes the price development. The rate component describes the fee as a value over a time interval in minutes. For more advanced price strategies, a tariff can consist of multiple rate components. Therefore, each rate must a number defining in which order the rates applies, which also can be used to differentiate the rates. Furthermore, the rate object should be used to define periodical maximum fees, such as daily, weekly, monthly, or 8hrs maximum fees.
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### Rate Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -171,6 +172,7 @@ There are two types of schedule objects: active- and validSchedule. The activeSc
 
 The time values (_startTime_, _endTime_, _validTimeFrom_, and _validTimeTo_) have a time accuracy in minutes, and are given in minutes past midnight. To prevent time values from clashing, some standard definitions exists. The _startTime_ and _validTimeFrom_ are defined as the exact second the minutes defines, for example, 60 (01:00) defines the start time 01:00:00. In contrast, _endTime_ and _validTimeTo_ are defined as 1 second before what the minutes defines, for example, 1380 (23:00) defines the end time 22:59:59.
 
+Part of [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object).
 #### ActiveSchedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -270,11 +272,11 @@ TODO: determine all the required elements for every object under Location
 |name|String|Name or nickname of the area||
 |areaNumber|String(ID)|Internal area numbering||
 |address| Address|Object containing address info||
-|contact| Contact|Object containing contanct info for the area||
-|geoLocation|GeoLocation|Simple geospatial information regarding the area||
-|polygons|Polygon|Complex geospatial information regarding the area||
-|auxiliary|Auxiliary|Additional information of the area||
-|log|Log|Information regarding who created and upated the information the last|Required|
+|contact| [Contact](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#contact-object)|Object containing contanct info for the area||
+|geoLocation|[GeoLocation](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#geolocation-object)|Simple geospatial information regarding the area||
+|polygons|[Polygon](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#polygon-object)|Complex geospatial information regarding the area||
+|auxiliary|[Auxiliary](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#auxiliary-object)|Additional information of the area||
+|log|[Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)|Information regarding who created and upated the information the last|Required|
 
 Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
 
@@ -298,6 +300,7 @@ Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingComm
 ### Geospatial Location
 Locations may include geospatial coordinates, making it easier to find the location
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### GeoLocation Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -319,6 +322,7 @@ Locations may include geospatial coordinates, making it easier to find the locat
 ### Polygon
 More advanced geographical data such as polygon markups in a map might be sought after. A commonly used format which provides such functionalities is KML. However, KML is a format based on XML with their own definition for file structures and might be hard to include in the JSON representation. However, some might want other formats than KML. Therefore, the format includes an object for attaching a reference providing the location of the polygon files. The polygon object also supports the use of encoded polygon data as an encrypted string.
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Polygon Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -330,6 +334,7 @@ More advanced geographical data such as polygon markups in a map might be sought
 ### Auxiliary
 Contains additional information regarding the parking area, such as currency, time zone, and operating hours.
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Auxiliary Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -354,6 +359,7 @@ Contains additional information regarding the parking area, such as currency, ti
 ### Schedule
 Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-object) object of the tariff.
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Schedule Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -369,6 +375,7 @@ Schedule has the same day [tokens](https://github.com/Rauiy/DynamicPricingCommun
 ### Surcharges
 Might need to add more elements to surcharges
 
+Part of [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object).
 #### Surcharges Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
