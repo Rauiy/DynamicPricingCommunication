@@ -3,7 +3,7 @@
 ##### Table of Contents   
 * [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff)
 
-..* [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
+ * [Tariff Object](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#tariff-object)
 
 # Protocol format
 The protocol’s format is defined for JSON format.
@@ -46,13 +46,13 @@ The elements that provides additional information for a tariff are: _tariffType_
 |targetGroup|Array(ParkingType)|Tokens if the tariff is exclusive to some groups|Required<br/>Default: PUBLIC|
 |vehicles|Array(VehicleType)|Tokens if the tariff is exclusive to some vehicle types||
 
-#### TariffType Tokens
+##### TariffType Tokens
 |Token Name|Description|
 |----------|-----------|
 |REGULAR|The tariff has stoppable rates|
 |FIXED|The tariff only has fixed rates|
 
-#### ParkingType Tokens
+##### ParkingType Tokens
 |Token Name|Description|
 |----------|-----------|
 |PRIVATE|Private tariff|
@@ -62,7 +62,7 @@ The elements that provides additional information for a tariff are: _tariffType_
 |PUBLIC|The tariff is open to the public|
 
 TODO: Determine all necessery vehicle types
-#### VehicleType Tokens
+##### VehicleType Tokens
 |Token Name|Description|
 |----------|-----------|
 |CAR|Personal car|
@@ -88,7 +88,7 @@ The rate is the smallest component of a parking fee, which describes the price d
 |max|Boolean|Set true if the rate defines a max fee|Default: false|
 |countOnlyPaidTime|Boolean|Set true if the interval only should only count for paid hours|Default: false|
 
-#### UnitType Tokens
+##### UnitType Tokens
 |Token Name|Description|
 |----------|-----------|
 |MIN|The rate interval is given in minutes|
@@ -208,7 +208,7 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 ]}
 ```
 
-#### Day Tokens
+##### Day Tokens
 |Token Name|Description|
 |----------|-----------|
 |MONDAY||
@@ -220,6 +220,8 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 |SUNDAY||
 |HOLIDAY|Also known as red days|
 |DAY_BEFORE_RED_DAY|Also know as day before holiday|
+
+These [tokens](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule-object) is also used for Location
 
 ## Location
 The purpose of location data is to map parking-related information to a location. 
@@ -259,6 +261,9 @@ TODO: determine all the required elements for every object under Location
 |email|String|Email to contact the responsible organization|Required|
 |phoneNumber|String|Number to contact the responsible organization||
 
+### Geospatial Location
+Locations may include geospatial coordinates, making it easier to find the location
+
 #### GeoLocation Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -266,6 +271,16 @@ TODO: determine all the required elements for every object under Location
 |longitude|String|||
 |geoType|GeoType|Token describing what the geo-point defines||
 |locationName|String|Nickname for the geo-point||
+
+##### GeoType Tokens
+|Token Name|Description|
+|----------|-----------|
+|ENTRY|The point is a car entry|
+|EXIT|The point is a car exist|
+|ACCESS|The point is a people entrance|
+|METER|The point is a parking meter|
+|POINT|The point is a directional point|
+|OTHER|Not in list, an update might be required!|
 
 ### Polygon
 More advanced geographical data such as polygon markups in a map might be sought after. A commonly used format which provides such functionalities is KML. However, KML is a format based on XML with their own definition for file structures and might be hard to include in the JSON representation. However, some might want other formats than KML. Therefore, the format includes an object for attaching a reference providing the location of the polygon files. The polygon object also supports the use of encoded polygon data as an encrypted string.
@@ -279,7 +294,8 @@ More advanced geographical data such as polygon markups in a map might be sought
 |description|String|Additional information about the polygon||
 
 ### Auxiliary
-Contains additional information regarding the parking area. 
+Contains additional information regarding the parking area, such as currency, time zone, and operating hours.
+
 #### Auxiliary Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -288,11 +304,21 @@ Contains additional information regarding the parking area.
 |public|Boolean|If the parking area is open to the public||
 |paid|Boolean|If the parking area requires payment||
 |locationType|LocationType|What type of parking area it is||
-|operatingHours|Schedule|Opening hours of the parking area||
+|operatingHours|Schedule|Operating hours of the parking area||
 |surcharges|Surcharges|Additional charge information||
 
+##### LocationType Tokens
+|Token Name|Description|
+|----------|-----------|
+|ABOVE_GROUND_GARAGE||
+|UNDERGROUND_GARAGE||
+|ON_STREET||
+|SURFACE_LOT||
+|PRIVATE|Privately owned parking lot|
+|OTHER|Not in list, which means an update is required!|
+
 ### Schedule
-Is similar to the active [schedule][#active-schedules] object of the tariff
+Is similar to the active [schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-object) object of the tariff.
 
 #### Schedule Object
 |Element Name|Type|Description|Constraints|
@@ -302,6 +328,9 @@ Is similar to the active [schedule][#active-schedules] object of the tariff
 |endTime|Int|Closing time|Min value: 0 <br /> Max value: 1440|
 |days|Days|Days the parking area is open||
 |date|Date|Specific date the parking area is open||
+
+##### Day Tokens (2)
+Schedule has the same day [tokens](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#day-tokens) as defined under tariff
 
 ### Surcharges
 Might need to add more elements to surcharges
@@ -319,6 +348,7 @@ Occupancy data are the information that describes the occupancy status of a park
 TODO: Determine what occupancy approach is best, those elements should be set as required.
 TODO: Decide if average occupancy should be updated per day, as update frequency, or something else.
 TODO: Determine what update frequency should be provided in for unit (seconds?, minutes?, or days?)
+
 ### Occupancy Object
 |Element Name|Type|Description|Constraints|
 |------|------|-------|------|
@@ -332,6 +362,16 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |detectionMethod|DetectionType|How occupancy data is collected||
 |parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
 |log|Log|When this object was created and when the static info was updated last|Required|
+
+##### DetectionType tokens
+|Token Name|Description|
+|----------|-----------|
+|MANUALLY|The occupancy data is measured manually by workers|
+|SPACE_SENSOR|Individual space sensor (many kinds)|
+|VIDEO_COUNT|A camera is counting cars that passes|
+|IMAGE_ANALYTIC|Still images are analyzed|
+|VIDEO_ANALYTIC|Live images are analyzed|
+|CROWD_SOURCING|The occupancy data is provided from multiple sources|
 
 #### ParkingSpace Object
 |Element Name|Type|Description|Constraints|
