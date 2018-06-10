@@ -406,3 +406,13 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |spaceType| SpaceType|What kind of space it is||
 |updated| DateTime|When static info was updated last||
 
+#### SpaceType
+|Token Name|Description|
+|----------|-----------|
+|RESERVED||
+|UNRESERVED||
+|RESERVATION||
+|EVENT||
+|VALET||
+|OTHER||
+
