@@ -15,6 +15,7 @@
     * [Active Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#active-schedule-examples)
     * [Valid Schedule](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#validschedule-object)
     * [Valid Schedule Examples](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#valid-schedule-examples)
+  * [Log](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
 * [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location)
   * [Address](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#address-object)
   * [Contact](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#contact-object)
@@ -242,7 +243,17 @@ Like activeSchedules, multiple validSchedules might be necessary, and therefore 
 |HOLIDAY|Also known as red days|
 |DAY_BEFORE_RED_DAY|Also know as day before holiday|
 
-These [tokens](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule-object) is also used for Location
+These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#schedule-object)
+
+#### Log Object
+|Element Name|Type|Description|Constraints|
+|------|------|-------|-------|
+|updated| DateTime|When the object was updated last|Required|
+|user| String|Name/Username of the user that updated the object last|Required|
+|created| DateTime|When the object was created|Required|
+|creator| String|Name/Username of the creator of the object|Required|
+
+These tokens are also used for [Location](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#location-object) and [Occupancy](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#occupancy-object)
 
 ## Location
 The purpose of location data is to map parking-related information to a location. 
@@ -264,6 +275,8 @@ TODO: determine all the required elements for every object under Location
 |polygons|Polygon|Complex geospatial information regarding the area||
 |auxiliary|Auxiliary|Additional information of the area||
 |log|Log|Information regarding who created and upated the information the last|Required|
+
+Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
 
 #### Address Object
 |Element Name|Type|Description|Constraints|
@@ -383,6 +396,8 @@ TODO: Determine what update frequency should be provided in for unit (seconds?, 
 |detectionMethod|DetectionType|How occupancy data is collected||
 |parkingSpace|Array(ParkingSpace)|Information regarding individual parking spaces||
 |log|Log|When this object was created and when the static info was updated last|Required|
+
+Log object is defined under [Tariff](https://github.com/Rauiy/DynamicPricingCommunication/blob/master/README.md#log-object)
 
 #### DetectionType tokens
 |Token Name|Description|
