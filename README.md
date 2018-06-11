@@ -4,7 +4,7 @@
 |:---:|:---:|:---:|:---:|
 |2018-06-10|Steven Ly|0.1|Added format description as readme|
 
-**_ADD NOTICE_**
+Copyright 2018 EasyPark
 
 ## Table of Contents   
 * [Tariff](#tariff)
