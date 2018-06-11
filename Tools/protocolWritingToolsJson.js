@@ -2,7 +2,7 @@
  * Created by Steven on 2018-03-13 sly@kth.se
  * tools to build a json object according to dynamic pricing communication protocol
  */
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require('./uuid/v4');
 const fs = require('fs');
 
 // jsonObject describing data fields relations. Only parents has keys
