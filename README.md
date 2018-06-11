@@ -260,7 +260,7 @@ These tokens are also used for [Location](#schedule-object)
 |created| DateTime|When the object was created|Required|
 |creator| String|Name/Username of the creator of the object|Required|
 
-These tokens are used for [Tariff](#tariff-object), [Location](#location-object) and [Occupancy](#occupancy-object)
+The Log object is part of [Tariff](#tariff-object), [Location](#location-object) and [Occupancy](#occupancy-object)
 
 ## Location
 The purpose of location data is to map parking-related information to a location. 
