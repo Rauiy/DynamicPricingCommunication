@@ -1,0 +1,100 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "ft-0",
+    "locationId": "10",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "FIXED",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+      "maxFee": 5.4,
+      "maxParkingTime": 540
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 0.3,
+        "interval": 10,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 0,
+        "interval": 10,
+        "intervals": 2,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 2,
+        "value": 0.1,
+        "interval": 10,
+        "intervals": 999,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 540,
+        "endTime": 1080,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY"
+        ]
+      },
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-1",
+        "startTime": 540,
+        "endTime": 840,
+        "days": [
+          "SATURDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2017-11-17T00:00:00+01:00",
+        "validTo": "2099-11-17T00:00:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:15:43+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:15:43+02:00",
+      "author": "auto"
+    }
+  }]
+}

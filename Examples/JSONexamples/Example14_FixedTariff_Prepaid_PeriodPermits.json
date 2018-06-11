@@ -1,0 +1,125 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "ft-4",
+    "locationId": "14",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "FIXED",
+      "targetGroup": [
+        "RESIDENTIAL"
+      ],
+      "prepaid": true
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 60,
+        "interval": 1440,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": true
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 120,
+        "interval": 2880,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": true
+      },
+      {
+        "type": "rate",
+        "order": 2,
+        "value": 180,
+        "interval": 4320,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": true
+      },
+      {
+        "type": "rate",
+        "order": 3,
+        "value": 300,
+        "interval": 7200,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": true
+      },
+      {
+        "type": "rate",
+        "order": 4,
+        "value": 900,
+        "interval": 43200,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": false
+      },
+      {
+        "type": "rate",
+        "order": 5,
+        "value": 2700,
+        "interval": 129600,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 0,
+        "endTime": 1440,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2015-01-01T00:00:00+01:00",
+        "validTo": "2016-08-30T23:59:00+02:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "FRIDAY",
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "DAY_BEFORE_RED_DAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T10:20:50+02:00",
+      "user": "auto",
+      "created": "2018-06-11T10:20:50+02:00",
+      "author": "auto"
+    }
+  }]
+}

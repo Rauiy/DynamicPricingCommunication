@@ -1,0 +1,101 @@
+ {"tariffs": [
+    {
+      "type": "tariff",
+      "tariffId": "mt-0",
+      "locationId": "20",
+      "restrictions": {
+        "type": "restrictions",
+        "tariffType": "REGULAR",
+        "targetGroup": [
+          "PUBLIC"
+        ],
+        "prepaid": false,
+		"maxParkingTime": 720
+      },
+      "rates": [
+        {
+          "type": "rate",
+          "order": 0,
+          "value": 0.5,
+          "interval": 1,
+          "intervals": 1,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        },
+        {
+          "type": "rate",
+          "order": 1,
+          "value": 0,
+          "interval": 1,
+          "intervals": 59,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        },
+        {
+          "type": "rate",
+          "order": 2,
+          "value": 0.0083333333,
+          "interval": 1,
+          "intervals": 2820,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        }
+      ],
+      "activeSchedules": [
+        {
+          "type": "activeSchedule",
+          "activeScheduleId": "as-0",
+          "startTime": 480,
+          "endTime": 1140,
+          "days": [
+            "MONDAY",
+            "TUESDAY",
+            "WEDNESDAY",
+            "THURSDAY",
+            "FRIDAY",
+            "SATURDAY"
+          ]
+        },
+        {
+          "type": "activeSchedule",
+          "activeScheduleId": "as-1",
+          "startTime": 480,
+          "endTime": 750,
+          "days": [
+            "SUNDAY",
+            "HOLIDAY"
+          ]
+        }
+      ],
+      "validSchedules": [
+        {
+          "type": "validSchedule",
+          "validScheduleId": "vs-0",
+          "validFrom": "2017-11-01T00:00:00+01:00",
+          "validTo": "2999-11-01T23:59:00+01:00",
+          "validTimeFrom": 0,
+          "validTimeTo": 1440,
+          "validDays": [
+            "DAY_BEFORE_RED_DAY",
+            "FRIDAY",
+            "HOLIDAY",
+            "MONDAY",
+            "SATURDAY",
+            "SUNDAY",
+            "THURSDAY",
+            "TUESDAY",
+            "WEDNESDAY"
+          ]
+        }
+      ],
+      "log": {
+        "updated": "2018-06-11T09:15:42+02:00",
+        "user": "auto",
+        "created": "2018-06-11T09:15:42+02:00",
+        "author": "auto"
+      }
+    }]
+}

@@ -1,0 +1,95 @@
+{	"tariffs":[
+	{
+      "type": "tariff",
+      "tariffId": "mt-1",
+      "locationId": "21",
+      "restrictions": {
+        "type": "restrictions",
+        "tariffType": "Regular",
+        "targetGroup": [
+          "PUBLIC"
+        ],
+        "prepaid": false,
+        "maxFee": 12,
+		"maxParkingTime": 720
+      },
+      "rates": [
+        {
+          "type": "rate",
+          "order": 0,
+          "value": 1,
+          "interval": 1,
+          "intervals": 1,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        },
+        {
+          "type": "rate",
+          "order": 1,
+          "value": 0,
+          "interval": 1,
+          "intervals": 29,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        },
+        {
+          "type": "rate",
+          "order": 2,
+          "value": 0.0333333,
+          "interval": 1,
+          "intervals": 999,
+          "unit": "MIN",
+          "repeat": false,
+          "max": false
+        }
+      ],
+      "activeSchedules": [
+        {
+          "type": "activeSchedule",
+          "activeScheduleId": "as-0",
+          "startTime": 480,
+          "endTime": 1200,
+          "days": [
+            "MONDAY",
+            "TUESDAY",
+            "WEDNESDAY",
+            "THURSDAY",
+            "FRIDAY",
+            "SATURDAY",
+            "SUNDAY",
+            "DAY_BEFORE_RED_DAY",
+            "HOLIDAY"
+          ]
+        }
+      ],
+      "validSchedules": [
+        {
+          "type": "validSchedule",
+          "validScheduleId": "vs-0",
+          "validFrom": "2017-11-22T00:00:00+01:00",
+          "validTo": "2099-11-22T00:00:00+01:00",
+          "validTimeFrom": 0,
+          "validTimeTo": 1440,
+          "validDays": [
+            "DAY_BEFORE_RED_DAY",
+            "FRIDAY",
+            "HOLIDAY",
+            "MONDAY",
+            "SATURDAY",
+            "SUNDAY",
+            "THURSDAY",
+            "TUESDAY",
+            "WEDNESDAY"
+          ]
+        }
+      ],
+      "log": {
+        "updated": "2018-06-11T09:15:42+02:00",
+        "user": "auto",
+        "created": "2018-06-11T09:15:42+02:00",
+        "author": "auto"
+      }
+    }]
+}

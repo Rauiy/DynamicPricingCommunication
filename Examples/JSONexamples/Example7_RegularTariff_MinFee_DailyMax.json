@@ -1,0 +1,83 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "rt-7",
+    "locationId": "7",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "REGULAR",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+      "minFee": 32,
+      "maxParkingTime": 4320
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 64,
+        "interval": 60,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": true,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 340,
+        "interval": 1440,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": true
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 0,
+        "endTime": 1440,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2017-12-19T00:00:00+01:00",
+        "validTo": "2099-12-19T00:00:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:57:27+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:57:27+02:00",
+      "author": "auto"
+    }
+  }]
+}

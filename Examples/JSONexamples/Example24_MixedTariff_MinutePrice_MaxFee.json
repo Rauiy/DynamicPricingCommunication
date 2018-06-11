@@ -1,0 +1,130 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "70100TT18934",
+    "locationId": "54926",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "REGULAR",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+      "maxFee": 1.7,
+      "maxParkingTime": 60
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 0.4,
+        "interval": 1,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 0,
+        "interval": 1,
+        "intervals": 19,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 2,
+        "value": 0.04,
+        "interval": 1,
+        "intervals": 10,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 3,
+        "value": 0.03,
+        "interval": 1,
+        "intervals": 30,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 4,
+        "value": 0.0266666,
+        "interval": 1,
+        "intervals": 30,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 5,
+        "value": 0.016666666,
+        "interval": 1,
+        "intervals": 30,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 480,
+        "endTime": 1200,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY"
+        ]
+      },
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-1",
+        "startTime": 480,
+        "endTime": 1140,
+        "days": [
+          "SATURDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2017-12-19T00:00:00+01:00",
+        "validTo": "2099-12-19T00:00:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:57:27+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:57:27+02:00",
+      "author": "auto"
+    }
+  }]
+}

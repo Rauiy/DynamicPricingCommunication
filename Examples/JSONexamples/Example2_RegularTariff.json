@@ -1,0 +1,85 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "rt-2",
+    "locationId": "2",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "REGULAR",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+	  "maxParkingTime": 1440
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 0.5,
+        "interval": 60,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": true,
+        "max": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 480,
+        "endTime": 750,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY"
+        ]
+      },
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-1",
+        "startTime": 840,
+        "endTime": 1140,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2017-11-21T00:00:00+01:00",
+        "validTo": "2099-11-21T00:00:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:15:43+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:15:43+02:00",
+      "author": "auto"
+    }
+  }]
+}

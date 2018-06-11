@@ -1,0 +1,85 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "ft-5",
+    "locationId": "5",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "FIXED",
+      "targetGroup": [
+        "RESIDENTIAL"
+      ],
+      "prepaid": true
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 70,
+        "interval": 1,
+        "intervals": 1,
+        "unit": "WEEK",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 250,
+        "interval": 1,
+        "intervals": 1,
+        "unit": "MONTH",
+        "repeat": false,
+        "max": false,
+        "countOnlyPaidTime": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 0,
+        "endTime": 1440,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "DAY_BEFORE_RED_DAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2005-10-01T00:00:00+02:00",
+        "validTo": "2999-12-31T23:59:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "SATURDAY",
+          "THURSDAY",
+          "WEDNESDAY",
+          "TUESDAY",
+          "MONDAY",
+          "FRIDAY",
+          "SUNDAY",
+          "DAY_BEFORE_RED_DAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T10:20:50+02:00",
+      "user": "auto",
+      "created": "2018-06-11T10:20:50+02:00",
+      "author": "auto"
+    }
+  }]
+}

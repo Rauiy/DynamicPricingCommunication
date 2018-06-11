@@ -1,0 +1,94 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "rt-5",
+    "locationId": "5",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "REGULAR",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+	  "maxParkingTime": 10080
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 0,
+        "interval": 60,
+        "intervals": 2,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 10,
+        "interval": 60,
+        "intervals": 2500,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 2,
+        "value": 50,
+        "interval": 1440,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": true
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 0,
+        "endTime": 1440,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "DAY_BEFORE_RED_DAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2018-01-26T00:00:00+01:00",
+        "validTo": "2099-01-26T00:00:00+01:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:15:43+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:15:43+02:00",
+      "author": "auto"
+    }
+  }]
+}

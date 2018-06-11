@@ -1,0 +1,132 @@
+{ "tariffs":[
+  {
+    "type": "tariff",
+    "tariffId": "mt-2",
+    "locationId": "22",
+    "restrictions": {
+      "type": "restrictions",
+      "tariffType": "REGULAR",
+      "targetGroup": [
+        "PUBLIC"
+      ],
+      "prepaid": false,
+	  "maxParkingTime": 1440
+    },
+    "rates": [
+      {
+        "type": "rate",
+        "order": 0,
+        "value": 0.25,
+        "interval": 1,
+        "intervals": 1,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 1,
+        "value": 0,
+        "interval": 1,
+        "intervals": 59,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      },
+      {
+        "type": "rate",
+        "order": 2,
+        "value": 0.0041666667,
+        "interval": 1,
+        "intervals": 1440,
+        "unit": "MIN",
+        "repeat": false,
+        "max": false
+      }
+    ],
+    "activeSchedules": [
+      {
+        "type": "activeSchedule",
+        "activeScheduleId": "as-0",
+        "startTime": 480,
+        "endTime": 1200,
+        "days": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "DAY_BEFORE_RED_DAY",
+          "HOLIDAY"
+        ]
+      }
+    ],
+    "validSchedules": [
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-0",
+        "validFrom": "2018-10-01T00:00:00+02:00",
+        "validTo": "2019-03-31T23:59:00+02:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      },
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-1",
+        "validFrom": "2019-10-01T00:00:00+02:00",
+        "validTo": "2020-03-31T23:59:00+02:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      },
+      {
+        "type": "validSchedule",
+        "validScheduleId": "vs-2",
+        "validFrom": "2020-10-01T00:00:00+02:00",
+        "validTo": "2021-03-31T23:59:00+02:00",
+        "validTimeFrom": 0,
+        "validTimeTo": 1440,
+        "validDays": [
+          "DAY_BEFORE_RED_DAY",
+          "FRIDAY",
+          "HOLIDAY",
+          "MONDAY",
+          "SATURDAY",
+          "SUNDAY",
+          "THURSDAY",
+          "TUESDAY",
+          "WEDNESDAY"
+        ]
+      }
+    ],
+    "log": {
+      "updated": "2018-06-11T09:15:43+02:00",
+      "user": "auto",
+      "created": "2018-06-11T09:15:43+02:00",
+      "author": "auto"
+    }
+  }]
+}
