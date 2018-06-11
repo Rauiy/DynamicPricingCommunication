@@ -1,20 +1,9 @@
 /**
  * Created by Steven on 2018-03-13 sly@kth.se
- * Tools that translate a specific type of database data into json format
- *
- * Location has no hierarchy, everything's in parking area rows
- *
- * CSV har the hierarchy of Tariff Table (Partly tariff and valid start times)
- *                            | -> Tariff Units (Partly tariff and valid use times)
- *                                   | -> Tariff Prices (Rates)
- *
- * BucketCSV has the hierarchy of Tariff Table (valid times)
- *                                   | -> Tariff Units (rates)
- *                                   | -> Taxable Time (TeaTime)
+ * Tools that converts database data into json format
  */
 
-const pwt = require('./protocolWritingToolsJson'),
-    data = require('./fakeDatabase');
+const pwt = require('../../tools/protocolWritingToolsJson');
 
 // jsonObject describing data fields relations.
 // Should add as a config file or something
@@ -131,53 +120,40 @@ Date.prototype.toIsoString = function () {
  * Convert data rows with tariff information into tariff objects
  * @param{Object} data - Data rows to convert to json, should be key separated
  * @returns {*} array of tariff objects or error
- */
-// Try make it auto adapt for both buckets and regular
+*/
 function convertTariffData(data) {
-    // Get all tariff table id (outer restriction)
-    let  locationIds = Object.keys(data.SU);
+    // Get every location id
+    let  locationIds = data['all-locationIDs'];
 
-    // If neither was provided
-    if(!data['TP'] && !data['BU'])
+    // Double check if required data was provided
+    if(!data['rateData'])
         return {error: 'Required data was not provided'};
 
+    // Double check that any location ID actually was provided
     if (!locationIds.length)
         return {error: 'Could not find any location ids in provided data'};
 
-    let tariffs = [];
+    let tariffs = []; // Create empty array to put new tariffs at
 
-    for (let i = 0; i < locationIds.length; i++) {
-        let dat = {};
+    for (let i = 0; i < locationIds.length; i++) { // Rotate over location IDs.
 
-        // Filter out only relevant data for the locations
-        // This is required because some tariff tables are reused by multiple locations
-        // Only SU data might clash because of multiple location might have the same tarifftable
-        dat.SU = data.SU[locationIds[i]];//getRowsWithId(data['SU'], transToCsv.locationId, locationIds[i]);
+        // TODO: prepare all tariff information of one location
 
-        let tariffTableIds = getKeyValues(dat.SU, transToCsv.tariffTableId);
-        // Get tarifftableIds associated with location Id
-        for(let j = 0; j < tariffTableIds.length; j++) {
-            // Try convert into regular
-            if (dat.TP)
-                res = createTariffObjects(tariffTableIds[j], dat, tariffs);
+        // Get all tariffIDs associated with location
+        let tariffIds = getKeyValues(data['all-tariff-IDs-for-Location'], 'tariffID');
 
-            if (res && res.error) {
-                //console.error('Error converting tariff object: ' + tariffTableIds[j] + '. ' + res.error);
+        for(let j = 0; j < tariffIds.length; j++) {
+            // Try convert data
+            let res = createTariffObject(data['all-tariff-data-for-matching-tariffID'], tariffs);
+
+            if (res && res.error) { // Check if success
+                console.error('Error converting tariff object: ' + tariffIds[j] + '. ' + res.error);
             }
 
         }
     }
     return tariffs;
 }
-
-/**
- * UNDER CONSTRUCTION
- * @returns {{error: string}}
- */
-function convertOccupancyData() {
-    return {error: 'There is currently no way to convert occupancy data'};
-}
-
 /**
  * Convert date object into ISO string (with gmt notation)
  * @param date
@@ -206,6 +182,10 @@ function createTariffObject(data, tariffs) {
     // Create restrictions object
     let restrictions = pwt.createObjectBase('restrictions');
     // TODO: populate the restrictions object with necessary data
+    // Get restriction and add to tariff object
+    addRestrictions(data['restrictions'], tariff);
+
+    // Or create restrictions here
     pwt.addElementTo(tariff, null, 'restrictions', restrictions);
 
     // TODO: generate and populate rate objects
@@ -235,6 +215,60 @@ function createTariffObject(data, tariffs) {
     return tariffs;
 }
 
+function addRestrictions(restrictionsData, tariff){
+    let rest = pwt.createObjectBase('restrictions'); // Tariff only has one restrictions object
+
+    // TODO: populate restrictions object
+
+    // Try automatically add elements to restrictions object
+    autoAddElements(jsonMaps.restrictions, restrictionsData, rest);
+
+    pwt.addElementTo(rest, null, 'tariffType', 'REGULAR');
+    //pwt.addElementTo(rest, null, 'maxFee', 200);
+    //pwt.addElementTo(rest, null, 'minFee', 10);
+    pwt.addElementTo(rest, null, 'maxPaidParkingTime', 120); // Max 2h during paid hours
+    pwt.addElementTo(rest, null, 'maxParkingTime', 1440); // Otherwise 24h max parking time (by parking rules)
+    pwt.addElementTo(rest, null, 'prepaid', false);
+    //pwt.addElementTo(rest, null, 'resetTime', 0); // Next day starts at 00:00:00
+    pwt.addElementTo(rest, null, 'targetGroup', 'PUBLIC'); // Open to public
+    //pwt.addElementTo(rest, null, 'vehicles', 'CAR'); // Limited to regular cars
+
+    pwt.addElementTo(tariff, null, 'restrictions', rest);
+}
+
+/**
+ * Converts and adds rate objects to tariff object
+ * @param{Array} rateData - Data rows containing rate data
+ * @param{Object} tariff - A tariff object to put rates to
+ * @returns {Object} Tariff object
+ */
+function addRates(rateData, tariff) {
+
+    for (let i = 0; i < rateData.length; i++) { // Tariff might have multiple rate objects
+        // Create rate object using template
+        let rate = pwt.createObjectBase('rate');
+
+        // TODO: Populate the rate object
+
+        // Try automatically add elements to rate object
+        autoAddElements(jsonMaps.rate, rateData[i], rate);
+
+        // Or manually add them individually
+        pwt.addElementTo(rate, null, 'value', 10); // 10 money
+        pwt.addElementTo(rate, null, 'interval', 60); // 60 min i.e. 1 hour
+        pwt.addElementTo(rate, null, 'intervals', 1); // valid for 1 time
+
+        // Add additional data (if exists)
+        pwt.addElementTo(rate, null, 'repeat', false); // Does not repeat
+        pwt.addElementTo(rate, null, 'max', false); // Does not refer to a maximum fee
+        //pwt.addElementTo(rate, null, 'countPaidTimeOnly', false); Prepaid need additional information on how interval should be counted
+
+        pwt.addElementTo(tariff, null, 'rates', rate); // Add rate to tariff
+    }
+
+    return tariff;
+}
+
 /**
  * Example on adding active schedules to the tariff
  * @param{Object} scheduleData - Schedule data that defines when a tariff is active
@@ -242,7 +276,7 @@ function createTariffObject(data, tariffs) {
  */
 function addActiveSchedules(scheduleData, tariff) {
 
-    for (let i = 0; i < scheduleData.length; i++) {
+    for (let i = 0; i < scheduleData.length; i++) { // Tariff might have multiple active schedules
         // Create active schedule object using template
         let schedule = pwt.createObjectBase('activeSchedule');
 
@@ -252,6 +286,7 @@ function addActiveSchedules(scheduleData, tariff) {
         autoAddElements(jsonMaps.activeSchedule, scheduleData[i], schedule);
 
         // Or add them individually
+        pwt.addElementTo(schedule, null, "activeScheduleId", "as-" + tariff.activeSchedules.length);
         pwt.addElementTo(schedule, null, 'startTime', 0); // Starts 00:00:00
         pwt.addElementTo(schedule, null, 'endTime', 1440); // Ends 23:59:59
 
@@ -268,38 +303,39 @@ function addActiveSchedules(scheduleData, tariff) {
 }
 
 /**
- * Converts and adds rate objects to tariff object
- * @param{Array} rateData - Data rows containing rate data
- * @param{Object} tariff - A tariff object to put rates to
- * @param{Object} misc - Misc object containing additional information
- * @returns {Object} Tariff object
+ * Example on adding valid schedules to the tariff
+ * @param{Object} scheduleData - Schedule data that defines when a tariff is active
+ * @param{Object} tariff - The tariff object to add schedules to
  */
-function addRates(rateData, tariff, misc) {
+function addValidSchedules(scheduleData, tariff) {
 
+    for (let i = 0; i < scheduleData.length; i++) { // Tariff might have multiple valid schedules
+        // Create active schedule object using template
+        let schedule = pwt.createObjectBase('activeSchedule');
 
-    for (let i = 0; i < rateData.length; i++) {
-        // Create rate object using template
-        let rate = pwt.createObjectBase('rate');
+        // TODO: Populate schedule with data
 
-        // TODO: Populate the rate object
+        // autoAddElements can be used to automatically add elements to schedule object
+        autoAddElements(jsonMaps.validSchedule, scheduleData[i], schedule);
 
-        // Try automatically add elements to rate object
-        autoAddElements(jsonMaps.rate, rateData[i], rate);
+        // Or add them individually
+        pwt.addElementTo(schedule, null, "validScheduleId", "vs-" + tariff.validSchedules.length);
+        pwt.addElementTo(schedule, null, "validFrom", new Date().toIsoString());
+        pwt.addElementTo(schedule, null, "validTo", new Date("2099-12-31T23:59:59").toIsoString());
+        pwt.addElementTo(schedule, null, 'validTimeFrom', 0); // Starts 00:00:00
+        pwt.addElementTo(schedule, null, 'validTimeTo', 1440); // Ends 23:59:59
 
-        // Or manually add them individually
-        pwt.addElementTo(rate, null, 'value', 10); // 10 money
-        pwt.addElementTo(rate, null, 'interval', 60); // 60 min i.e. 1 hour
-        pwt.addElementTo(rate, null, 'intervals', 1); // valid for 1 time
-        // Add additional data (if exists)
-        pwt.addElementTo(rate, null, 'repeat', false); // Does not repeat
-        pwt.addElementTo(rate, null, 'max', false); // Does not refer to a maximum fee
+        pwt.addElementTo(schedule, null, 'validDays', 'MONDAY');
+        // . . .
+        pwt.addElementTo(schedule, null, 'validDays', 'SUNDAY');
 
-        pwt.addElementTo(tariff, null, 'rates', rate); // Add rate to tariff
+        // Add the new schedule to the tariff
+        // activeSchedules is a list element
+        pwt.addElementTo(tariff, null, 'activeSchedules', schedule);
     }
 
     return tariff;
 }
-
 
 // Help functions
 
@@ -326,16 +362,16 @@ function cloneObject(obj, id, number){
  * @returns {{error: string}} error if failed otherwise success
  */
 function autoAddElements(names, row, data) {
-    if (!data) {
+    if (!data) { // Data to put the elements to must be provided
         return {error: 'no data array were provided'};
     }
 
     for (let i = 0; i < names.length; i++) {
         // Translates the csv data field name into xml data field name
-        let tag = names[i];
-        let trans = transToCsv[tag];
+        let tag = names[i]; // Next element to add to object
+        let trans = transToSrc[tag]; // Get source name of this element
 
-        // Could not find corresponding name in lookup, skip data field
+        // Could not find corresponding name in lookup, skip element
         if (!trans) {
             continue;
         }
@@ -344,49 +380,17 @@ function autoAddElements(names, row, data) {
         let val = row[trans];
 
         // No value to add skipp
-        if (!val && val !== 0) // 0 is a value
+        if (!val && val !== 0) // 0 is a value that needs to be added
             continue;
 
-        val = fixType(tag, val);
+        val = fixType(tag, val); // Convert text to proper value types
 
-        let res = pwt.addElementTo(data, null, tag, val);
+        let res = pwt.addElementTo(data, null, tag, val); // Add element to object
 
-        if (res.error) {
+        if (res.error) { // If add element failed
             console.error(res.error);
         }
     }
-}
-
-/**
- * Auto add element to object, based on the elements of the input data
- * @param data - csv row object that contains relevant data
- * @param object - Object to put the data to
- * @returns {*} The object with the new elements added
- */
-function autoAdd(data, object) {
-    if (!object)
-        object = {};
-
-    for (let k in data) {
-        if (!data.hasOwnProperty(k) || k.indexOf('_id') !== -1) {
-            continue;
-        }
-
-        let tag = transToFormat[k];
-
-        if (!tag) {
-            continue;
-        }
-
-        let val = fixType(tag, data[k]);
-        let res = pwt.addElementTo(object, null, tag, val);
-
-        if (res.error) {
-            //console.error(res.error);
-            // Ignoring the errorrs currently, as I probably just tries to add wrong element to wrong object
-        }
-    }
-    return object;
 }
 
 /**
@@ -678,11 +682,10 @@ function getDefault(type){
 
 module.exports = {
     convertTariffData: convertTariffData,
-    convertLocationData: convertLocationData,
     getRowWithId: getRowWithId,
     getRowsWithId: getRowsWithId,
     getRowsWithValues: getRowsWithValues,
     getKeyValue: getKeyValue,
     getKeyValues: getKeyValues,
-    transToCsv: transToCsv,
+    transToSrc: transToSrc,
 };
