@@ -1,8 +1,9 @@
-# Dynamic Pricing Communication
+# Uniform Parking Tariff Protocol (UPTP-1)
 ## Version 0.1
 |Date|Author|Version|Change log|
 |:---:|:---:|:---:|:---:|
 |2018-06-10|Steven Ly|0.1|Added format description as readme|
+|2018-10-23|Robert Petersen|0.1|Updated name of protocol|
 
 ## Table of Contents   
 * [Tariff](#tariff)
